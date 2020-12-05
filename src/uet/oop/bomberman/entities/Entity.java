@@ -12,21 +12,26 @@ public abstract class Entity {
     protected int y;
     protected Image img;
 
-    public Entity( int x, int y, Image img) {
-        this.x = x;
-        this.y = y;
-        this.img = img;
-    }
-
+//    public Entity( int x, int y, Image img) {
+//        this.x = x;
+//        this.y = y;
+//        this.img = img;
+//    }
+public Entity( int xUnit, int yUnit, Image img) {
+    this.x = xUnit * Sprite.SCALED_SIZE;
+    this.y = yUnit * Sprite.SCALED_SIZE;
+    this.img = img;
+}
     public void render(GraphicsContext gc) {
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT); // tang hinh
-
-        ImageView iv = new ImageView(img); //tao hinh anh moi
-        Image base = iv.snapshot(params, null);
+//        SnapshotParameters params = new SnapshotParameters();
+//        params.setFill(Color.TRANSPARENT); // tang hinh
+//
+//        ImageView iv = new ImageView(img); //tao hinh anh moi
+//        Image base = iv.snapshot(params, null);
 
         //ve hinh anh o toa do x,y
-        gc.drawImage(base, x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE);
+        gc.drawImage(img, x , y );
+
     }
     public abstract void update();
 }

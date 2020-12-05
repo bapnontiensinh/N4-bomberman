@@ -9,10 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.keyboard.Keyboard;
+
+import uet.oop.bomberman.keyboard.KeyBoard;
 import uet.oop.bomberman.level.loadLevel;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class BombermanGame extends Application {
     public static final int HEIGHT = 15;
 
     private boolean running;
-    private Keyboard input = new Keyboard();
+    private KeyBoard keyBoard = new KeyBoard();
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -34,6 +33,10 @@ public class BombermanGame extends Application {
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
+    }
+
+    public KeyBoard getKeyBoard() {
+        return keyBoard;
     }
 
     @Override
@@ -48,6 +51,8 @@ public class BombermanGame extends Application {
 
         // Tao scene
         Scene scene = new Scene(root);
+
+        keyBoard.addListener(scene);
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -64,7 +69,7 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+        Entity bomberman = new Bomber(this,1, 1, Sprite.player_right.getFxImage());
         entities.add(bomberman);
 
         //start((Bomber) bomberman);
@@ -102,13 +107,13 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 
-    public void start(Bomber bomber) {
-        running = true;
-
-        while (running) {
-            input.update();
-            bomber.keyPressed = input;
-            bomber.render(gc);
-        }
-    }
+//    public void start(Bomber bomber) {
+//        running = true;
+//
+//        while (running) {
+//            input.update();
+//            bomber.keyPressed = input;
+//            bomber.render(gc);
+//        }
+//    }
 }
