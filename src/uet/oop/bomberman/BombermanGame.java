@@ -24,8 +24,8 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
 
-    private boolean running;
-    private Keyboard input = new Keyboard();
+    //private boolean running;
+    //private Keyboard input = new Keyboard();
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
@@ -86,7 +86,9 @@ public class BombermanGame extends Application {
 
         loadLevel setLevel = new loadLevel();
         try {
-            stillObjects = setLevel.updateLevel(1);
+            setLevel.updateLevel(1);
+            stillObjects = setLevel.getStillObjects();
+            entities = setLevel.getEntities();
         } catch (IOException e) {
             System.out.print("Cannot open file");
         }
@@ -102,7 +104,7 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 
-    public void start(Bomber bomber) {
+    /*public void start(Bomber bomber) {
         running = true;
 
         while (running) {
@@ -110,5 +112,5 @@ public class BombermanGame extends Application {
             bomber.keyPressed = input;
             bomber.render(gc);
         }
-    }
+    }*/
 }
