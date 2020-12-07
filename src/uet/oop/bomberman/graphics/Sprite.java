@@ -4,6 +4,7 @@ import javafx.scene.image.*;
 
 import java.awt.image.BufferedImage;
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
@@ -19,6 +20,12 @@ public class Sprite {
 	protected int _realWidth;
 	protected int _realHeight;
 	private SpriteSheet _sheet;
+
+	//change
+
+
+
+	//change
 
 	/*
 	|--------------------------------------------------------------------------
