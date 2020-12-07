@@ -16,8 +16,10 @@ import static uet.oop.bomberman.BombermanGame.WIDTH;
 
 public class loadLevel {
     private List<Entity> stillObjects = new ArrayList<>();
+    private List<Entity> entities = new ArrayList<>();
 
-    public List<Entity> updateLevel(int level) throws IOException {
+
+    public void updateLevel(int level) throws IOException {
         FileReader file = new FileReader("res/levels/Level" + level + ".txt");
         //String filename = "Level" + level + ".txt";
 
@@ -33,8 +35,6 @@ public class loadLevel {
                 addEntity(c, j, i);
             }
         }
-
-        return stillObjects;
     }
 
     public void addEntity(char c, int x, int y) {
@@ -45,14 +45,24 @@ public class loadLevel {
             case '*':
                 stillObjects.add(new Brick(x, y, Sprite.brick.getFxImage()));
                 break;
-            /*case 'p':
-                stillObjects.add(new Bomber(x, y, Sprite.player_down.getFxImage()));
-                break;*/
+            case 'p':
+                stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
+                entities.add(new Bomber(x, y, Sprite.player_down.getFxImage()));
+                break;
             case '1':
-                stillObjects.add(new Enemy(x, y, Sprite.balloom_left1.getFxImage()));
+                stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
+                entities.add(new Enemy(x, y, Sprite.balloom_left1.getFxImage()));
                 break;
             default:
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
         }
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+    public List<Entity> getStillObjects() {
+        return stillObjects;
     }
 }
