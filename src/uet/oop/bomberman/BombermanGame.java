@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.keyboard.Keyboard;
 import uet.oop.bomberman.level.loadLevel;
@@ -30,6 +31,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
+    private Bomb a_bomb = null;
 
 
     public static void main(String[] args) {
@@ -64,8 +66,8 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
+        a_bomb = new Bomb(3, 3, Sprite.bomb.getFxImage());
+        entities.add(a_bomb);
 
         //start((Bomber) bomberman);
     }
