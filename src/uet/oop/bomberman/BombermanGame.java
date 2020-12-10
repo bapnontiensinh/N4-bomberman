@@ -6,14 +6,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
-
 import uet.oop.bomberman.keyboard.KeyBoard;
 import uet.oop.bomberman.level.loadLevel;
 
@@ -22,42 +19,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BombermanGame extends Application {
-    
+
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-
-    private boolean running;
-    private KeyBoard keyBoard = new KeyBoard();
-    private GraphicsContext gc;
-    private Canvas canvas;
+    public Bomber player;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
+    private GraphicsContext gc;
+    private Canvas canvas;
+    /**
+     *
+     */
+    private boolean running;
 
+    /**
+     * Keyboard
+     */
+    private KeyBoard keyBoard = new KeyBoard();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
 
-    public KeyBoard getKeyBoard() {
-        return keyBoard;
-    }
-
     @Override
     public void start(Stage stage) {
-        // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
-
-        // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
-
-        // Tao scene
         Scene scene = new Scene(root);
-
         keyBoard.addListener(scene);
-
-        // Them scene vao stage
         stage.setScene(scene);
         stage.show();
 
@@ -72,29 +63,16 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(this,1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
-
-        //start((Bomber) bomberman);
+//        Entity bomberman = new Bomber(this, 1, 1, Sprite.player_right.getFxImage());
+//        entities.add(bomberman);
     }
 
     public void createMap() {
-        /*for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
-        }*/
-
-        loadLevel setLevel = new loadLevel();
+        loadLevel setLevel = new loadLevel(this);
         try {
             stillObjects = setLevel.updateLevel(1);
+            entities= setLevel.getEntities();
+            player=setLevel.getPlayer();
         } catch (IOException e) {
             System.out.print("Cannot open file");
         }
@@ -112,6 +90,7 @@ public class BombermanGame extends Application {
 
     public void start(Bomber bomber) {
         running = true;
+    }
 
     public List<Entity> getEntities() {
         return entities;
@@ -119,5 +98,9 @@ public class BombermanGame extends Application {
 
     public List<Entity> getStillObjects() {
         return stillObjects;
+    }
+
+    public KeyBoard getKeyBoard() {
+        return keyBoard;
     }
 }
