@@ -10,6 +10,11 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Grass;
+import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.Grass;
+import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.keyboard.KeyBoard;
 import uet.oop.bomberman.level.loadLevel;
@@ -25,6 +30,7 @@ public class BombermanGame extends Application {
     public Bomber player;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
+    private Bomb a_bomb = null;
     private GraphicsContext gc;
     private Canvas canvas;
     /**
@@ -63,8 +69,10 @@ public class BombermanGame extends Application {
 
         createMap();
 
-//        Entity bomberman = new Bomber(this, 1, 1, Sprite.player_right.getFxImage());
-//        entities.add(bomberman);
+        a_bomb = new Bomb(3, 3, Sprite.bomb.getFxImage());
+        entities.add(a_bomb);
+
+        //start((Bomber) bomberman);
     }
 
     public void createMap() {
