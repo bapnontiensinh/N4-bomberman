@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
 
@@ -28,13 +29,13 @@ public class directionalExplosion extends Entity {
             if (i == explosions.length - 1) last = true;
 
             switch (direction) {
-                case 0: y--; break;
-                case 1: x++; break;
-                case 2: y++; break;
-                case 3: x--; break;
+                case 0: y-= Sprite.SCALED_SIZE; break;
+                case 1: x+= Sprite.SCALED_SIZE; break;
+                case 2: y+= Sprite.SCALED_SIZE; break;
+                case 3: x-= Sprite.SCALED_SIZE; break;
             }
 
-            explosions[i] = new Explosion(x, y, last, direction);
+            explosions[i] = new Explosion(x / Sprite.SCALED_SIZE, y / Sprite.SCALED_SIZE, last, direction);
         }
     }
 

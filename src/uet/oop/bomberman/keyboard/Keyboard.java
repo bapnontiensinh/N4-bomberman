@@ -1,33 +1,60 @@
 package uet.oop.bomberman.keyboard;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 
-public class Keyboard implements KeyListener {
-    public boolean up, down, left, right, space;
-    public boolean[] keys = new boolean[120];
+public class KeyBoard {
+    public boolean up;
+    public boolean down;
+    public boolean left;
+    public boolean right;
+    public boolean space;
 
-    public void update() {
-        up = keys[KeyEvent.VK_UP];
-        down = keys[KeyEvent.VK_DOWN];
-        left = keys[KeyEvent.VK_LEFT];
-        right = keys[KeyEvent.VK_RIGHT];
-        space = keys[KeyEvent.VK_SPACE];
-    }
+    public void addListener(Scene scene) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        up = true;
+                        break;
+                    case DOWN:
+                        down = true;
+                        break;
+                    case LEFT:
+                        left = true;
+                        break;
+                    case RIGHT:
+                        right = true;
+                        break;
+                    case SPACE:
+                        space = true;
+                        break;
+                }
+            }
+        });
 
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        keys[e.getKeyCode()] = true;
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        keys[e.getKeyCode()] = false;
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        up = false;
+                        break;
+                    case DOWN:
+                        down = false;
+                        break;
+                    case LEFT:
+                        left = false;
+                        break;
+                    case RIGHT:
+                        right = false;
+                        break;
+                    case SPACE:
+                        space = false;
+                }
+            }
+        });
     }
 }

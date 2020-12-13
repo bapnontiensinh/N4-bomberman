@@ -6,7 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Entity {
-    protected double timeToExplode = 10; // 2 seconds
+    protected double timeToExplode = 120; // 2 seconds
     public int afterExplode = 20; // time to explosion disappear
 
     boolean exploded = false;
@@ -20,7 +20,7 @@ public class Bomb extends Entity {
     public void update() {
         if (timeToExplode > 0) {
             --timeToExplode;
-            System.out.print(timeToExplode);
+            //System.out.print(timeToExplode);
         } else {
             if (!exploded) {
                 explosion();
@@ -30,7 +30,7 @@ public class Bomb extends Entity {
             if (afterExplode > 0) {
                 --afterExplode;
             } else {
-                System.out.print("remove");
+                remove();
             }
         }
     }
@@ -41,7 +41,7 @@ public class Bomb extends Entity {
         explosions = new directionalExplosion[4];
 
         for (int i = 0; i < 4; ++i) {
-            explosions[i] = new directionalExplosion(x, y, i);
+            explosions[i] = new directionalExplosion(x / Sprite.SCALED_SIZE, y / Sprite.SCALED_SIZE, i);
         }
     }
 
