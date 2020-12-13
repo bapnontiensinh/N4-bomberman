@@ -10,8 +10,9 @@ public abstract class Entity {
     protected int x;
     protected int y;
     protected Image img;
+
     // add
-    protected Rectangle bound;
+    public Rectangle bound;
     public boolean isSolid;
 
 

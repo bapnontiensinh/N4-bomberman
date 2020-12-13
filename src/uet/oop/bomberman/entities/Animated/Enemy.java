@@ -1,8 +1,9 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Animated;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Animated.AnimatedEntity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
@@ -23,7 +24,7 @@ public class Enemy extends AnimatedEntity {
     public Enemy(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
         speed = 1;
-        stop = true;
+       stop = true;
     }
 
     @Override

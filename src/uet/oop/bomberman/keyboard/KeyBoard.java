@@ -9,6 +9,7 @@ public class KeyBoard {
     public boolean down;
     public boolean left;
     public boolean right;
+    public boolean space;
 
     public void addListener(Scene scene) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -26,6 +27,9 @@ public class KeyBoard {
                         break;
                     case RIGHT:
                         right = true;
+                        break;
+                    case SPACE:
+                        space = true;
                         break;
                 }
             }
@@ -47,6 +51,8 @@ public class KeyBoard {
                     case RIGHT:
                         right = false;
                         break;
+                    case SPACE:
+                        space = false;
                 }
             }
         });

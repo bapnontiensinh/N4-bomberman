@@ -1,11 +1,12 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Animated;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Animated.AnimatedEntity;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.graphics.Sprite.DEFAULT_SIZE;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
@@ -46,10 +47,20 @@ public class Bomber extends AnimatedEntity {
         if (game.getKeyBoard().right) {
             if (!collisiontoRight()) {
                 this.img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1,
-                        Sprite.player_right_2, _animate, 20).getFxImage();
+                        Sprite.player_right_2, _animate, 10).getFxImage();
                 x += speed;
             }
         }
+        if (game.getKeyBoard().space){
+            createBomb();
+        }
+    }
+
+    private int numberOfBomb=1;
+
+    private void createBomb() {
+        Bomb bomb = new Bomb((int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
+
     }
 
 
@@ -67,7 +78,7 @@ public class Bomber extends AnimatedEntity {
     @Override
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
-       // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+        gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     @Override
@@ -77,10 +88,10 @@ public class Bomber extends AnimatedEntity {
 //        bound.setX(x + SCALED_SIZE / 2 - bound.getWidth() / 2 - 6);
 //        bound.setY(y + SCALED_SIZE * 1 / 8);
 
-        bound.setWidth(SCALED_SIZE-6);
-        bound.setHeight(SCALED_SIZE-6);
-        bound.setX(x+6);
-        bound.setY(y+6);
+//        bound.setWidth(SCALED_SIZE-6);
+//        bound.setHeight(SCALED_SIZE-6);
+//        bound.setX(x+6);
+//        bound.setY(y+6);
 
 //        bound.setWidth(SCALED_SIZE);
 //        bound.setHeight(SCALED_SIZE);
