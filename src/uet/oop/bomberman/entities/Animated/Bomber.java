@@ -55,18 +55,21 @@ public class Bomber extends AnimatedEntity {
             }
         }
         if (game.getKeyBoard().space){
+            if (numberOfBomb<= MAX_BOMBS)
             createBomb();
         }
     }
     private boolean show = false;
-    private int numberOfBomb=1;
+    private int numberOfBomb=0;
+    private final int MAX_BOMBS=1;
     private Bomb bomb =new Bomb();
     private void createBomb() {
        // show =true;
+        numberOfBomb++;
         bomb = new Bomb((int)bound.getX()/SCALED_SIZE,(int)bound.getY()/SCALED_SIZE,Sprite.bomb.getFxImage());
      //   bomb = new Bomb(1,3,Sprite.bomb.getFxImage());
 
-        System.out.println("Create BOmb");
+      //  System.out.println("Create BOmb");
     }
 
 
@@ -76,6 +79,8 @@ public class Bomber extends AnimatedEntity {
         move();
         kill();
         bomb.update();
+       if (bomb.exploded)
+        numberOfBomb--;
     }
 
     private void kill() {
@@ -87,6 +92,7 @@ public class Bomber extends AnimatedEntity {
         gc.drawImage(img, x, y);
        // if (show == true){
             this.bomb.render(gc);
+
         //    show=false ;
         //}
 

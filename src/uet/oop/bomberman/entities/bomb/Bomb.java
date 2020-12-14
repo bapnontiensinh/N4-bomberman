@@ -9,7 +9,7 @@ public class Bomb extends Entity {
     protected double timeToExplode = 80;
     public int afterExplode = 20; // time to explosion disappear
 
-    boolean exploded = false;
+    public boolean exploded = false;
     public directionalExplosion[] explosions = null;
 
     public Bomb(int x, int y, Image img) {
@@ -32,7 +32,8 @@ public class Bomb extends Entity {
             if (afterExplode > 0) {
                 --afterExplode;
             } else {
-                System.out.print("remove");
+                //System.out.print("remove");
+                exploded=false;
             }
         }
     }
