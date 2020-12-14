@@ -71,4 +71,6 @@ public abstract class  AnimatedEntity extends Entity {
     public abstract void createBound();
 
     public abstract void move();
+
+    public abstract void remove();
 }

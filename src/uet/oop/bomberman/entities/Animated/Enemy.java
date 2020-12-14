@@ -147,6 +147,11 @@ public class Enemy extends AnimatedEntity {
         }
     }
 
+    @Override
+    public void remove() {
+
+    }
+
     private void kill() {
         if (bound.intersects(game.player.bound.getX(), game.player.bound.getY(),
                 game.player.bound.getWidth(), game.player.bound.getHeight())) {

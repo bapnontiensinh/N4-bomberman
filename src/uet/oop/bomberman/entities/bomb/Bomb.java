@@ -7,22 +7,16 @@ import uet.oop.bomberman.entities.Animated.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
-
 public class Bomb extends AnimatedEntity {
-    public int afterExplode = 20; // time to explosion disappear
-    public boolean exploded = false;
-    public boolean finished =false;
-    public directionalExplosion[] explosions = null;
     protected double timeToExplode = 120; // 2 seconds
+    public int afterExplode = 50; // time to explosion disappear
+
+    boolean exploded = false;
+    public directionalExplosion[] explosions = null;
+    private boolean removed = false;
 
     public Bomb(BombermanGame game, int x, int y, Image img) {
-        super(game,x, y, img);
-        isSolid=true;
-    }
-
-    public Bomb() {
-
+        super(game, x, y, img);
     }
 
     @Override
@@ -30,6 +24,7 @@ public class Bomb extends AnimatedEntity {
         createBound();
         if (timeToExplode > 0) {
             --timeToExplode;
+            //System.out.print(timeToExplode);
         } else {
             if (!exploded) {
                 explosion();
@@ -50,7 +45,7 @@ public class Bomb extends AnimatedEntity {
         explosions = new directionalExplosion[4];
 
         for (int i = 0; i < 4; ++i) {
-            explosions[i] = new directionalExplosion(game,x / Sprite.SCALED_SIZE, y / Sprite.SCALED_SIZE, i);
+            explosions[i] = new directionalExplosion(x / Sprite.SCALED_SIZE, y / Sprite.SCALED_SIZE, i);
         }
     }
 
@@ -64,28 +59,25 @@ public class Bomb extends AnimatedEntity {
             img = Sprite.bomb_exploded2.getFxImage();
             for (int i = 0; i < explosions.length; ++i) {
                 if (explosions[i] != null) {
-                    if (!collisiontoUp()){
-                        explosions[0].render(gc);
-                    }
-                    if (!collisiontoDown()){
-                        explosions[2].render(gc);
-                    }
-                    if (!collisiontoLeft()){
-                        explosions[1].render(gc);
-                    }
-                    if (!collisiontoRight()){
-                        explosions[3].render(gc);
-                    }
-                //    explosions[i].render(gc);
+                    explosions[i].render(gc);
                 }
             }
-            gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
         }
         super.render(gc);
+    }
+
+    @Override
+    public void remove() {
+        removed = true;
+    }
+
+    @Override
+    public void createBound() {
 
     }
 
-    public void remove() {
+    @Override
+    public void move() {
         finished=true;
     }
 
@@ -100,5 +92,9 @@ public class Bomb extends AnimatedEntity {
     @Override
     public void move() {
 
+    }
+
+    public boolean isRemoved() {
+        return removed;
     }
 }

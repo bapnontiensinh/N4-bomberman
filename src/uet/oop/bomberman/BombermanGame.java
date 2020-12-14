@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.keyboard.KeyBoard;
 import uet.oop.bomberman.level.loadLevel;
@@ -33,6 +34,8 @@ public class BombermanGame extends Application {
 
     private GraphicsContext gc;
     private Canvas canvas;
+
+    Camera gameCam;
 
     /**
      *
@@ -59,6 +62,7 @@ public class BombermanGame extends Application {
         //
         keyBoard.addListener(scene);
 
+        gameCam = new Camera(0, 0);
 
         stage.setScene(scene);
         stage.show();
@@ -74,6 +78,8 @@ public class BombermanGame extends Application {
 
         createMap();
 
+        a_bomb = new Bomb(this, 3, 3, Sprite.bomb.getFxImage());
+        entities.add(a_bomb);
 //        a_bomb = new Bomb(3, 3, Sprite.bomb.getFxImage());
 //        entities.add(a_bomb);
 
@@ -93,6 +99,7 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
+        if (a_bomb.isRemoved()) entities.remove(a_bomb);
     }
 
     public void render() {
@@ -115,5 +122,17 @@ public class BombermanGame extends Application {
 
     public KeyBoard getKeyBoard() {
         return keyBoard;
+    }
+
+    public Camera getGameCam() {
+        return gameCam;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
     }
 }
