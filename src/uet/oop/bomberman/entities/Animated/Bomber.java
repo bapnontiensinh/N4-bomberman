@@ -3,19 +3,24 @@ package uet.oop.bomberman.entities.Animated;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
 
 public class Bomber extends AnimatedEntity {
-    private final int MAX_BOMBS = 1;
+
+
     public boolean alive = true;
     private boolean show = false;
-    private int bombExisited = 0;
-    private Bomb bomb = new Bomb();
+
+  //  public Bomb bomb = new Bomb();
 
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
@@ -59,7 +64,7 @@ public class Bomber extends AnimatedEntity {
             }
         }
         if (game.getKeyBoard().space) {
-            if (bombExisited < MAX_BOMBS)
+            if (game.bombExisited < game.MAX_BOMBS)
                 createBomb();
         }
     }
@@ -73,10 +78,14 @@ public class Bomber extends AnimatedEntity {
 
     private void createBomb() {
         // show =true;
-        bombExisited++;
-        bomb = new Bomb(game,(int) bound.getX() / SCALED_SIZE, (int) bound.getY() / SCALED_SIZE, Sprite.bomb.getFxImage());
-        Bomb bomb = new Bomb(this.game, (int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
-
+//        game.bombExisited++;
+//        bomb = new Bomb(game,(int) bound.getX() / SCALED_SIZE, (int) bound.getY() / SCALED_SIZE, Sprite.bomb.getFxImage());
+//      //  Bomb bomb = new Bomb(this.game, (int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
+//
+//        game.getEntities().add(bomb);
+        game.createBomb();
+      //  game.getEntities().add(bomb);
+        //game.setA_bomb(bomb);
     }
 
 
@@ -84,16 +93,10 @@ public class Bomber extends AnimatedEntity {
     public void update() {
         animate();
         move();
-        kill();
-        if (bombExisited!=0){
-            bomb.update();
-            if (bomb.finished)
-                bombExisited--;
-        }
-
+        die();
     }
 
-    private void kill() {
+    private void die() {
         if (!alive) {
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, _animate, 20).getFxImage();
@@ -105,7 +108,7 @@ public class Bomber extends AnimatedEntity {
     @Override
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
-        this.bomb.render(gc);
+      //  this.bomb.render(gc);
         // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 

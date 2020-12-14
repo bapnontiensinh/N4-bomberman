@@ -14,7 +14,7 @@ public abstract class Entity {
     protected int x;
     protected int y;
     protected Image img;
-
+    public boolean active=false;
 
     //add
     public Entity() {
@@ -29,13 +29,6 @@ public abstract class Entity {
     }
 
     public void render(GraphicsContext gc) {
-//        SnapshotParameters params = new SnapshotParameters();
-//        params.setFill(Color.TRANSPARENT); // tang hinh
-//
-//        ImageView iv = new ImageView(img); //tao hinh anh moi
-//        Image base = iv.snapshot(params, null);
-
-        //ve hinh anh o toa do x,y
         gc.drawImage(img, x, y);
 
     }
@@ -49,4 +42,5 @@ public abstract class Entity {
     }
 
     public abstract void update();
+
 }

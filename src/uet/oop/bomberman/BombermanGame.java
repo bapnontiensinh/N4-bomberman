@@ -8,7 +8,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Animated.Bomber;
+import uet.oop.bomberman.entities.Brick;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Sprite;
@@ -19,28 +21,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
+
 public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
 
+    /**
+     * Bomb
+     */
+    public final int MAX_BOMBS = 1;
+    public int bombExisited = 0;
+    public Bomb bomb = new Bomb();
+    public List<Bomb> bombList = new ArrayList<>();
+
+
+    /**
+     * Player
+     */
+    public Bomber player;
+
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
 
-    public Bomber player;
-
-
-    private Bomb a_bomb = null;
-
+    Camera gameCam;
     private GraphicsContext gc;
     private Canvas canvas;
-
-    Camera gameCam;
-
-    /**
-     *
-     */
-    private boolean running;
 
     /**
      * Keyboard
@@ -51,15 +58,17 @@ public class BombermanGame extends Application {
         Application.launch(BombermanGame.class);
     }
 
+    /**
+     * Start Method
+     */
     @Override
     public void start(Stage stage) {
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(SCALED_SIZE * WIDTH, SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
         Group root = new Group();
         root.getChildren().add(canvas);
         Scene scene = new Scene(root);
 
-        //
         keyBoard.addListener(scene);
 
         gameCam = new Camera(0, 0);
@@ -77,39 +86,59 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
-
-        a_bomb = new Bomb(this, 3, 3, Sprite.bomb.getFxImage());
-        entities.add(a_bomb);
-//        a_bomb = new Bomb(3, 3, Sprite.bomb.getFxImage());
-//        entities.add(a_bomb);
-
-        //start((Bomber) bomberman);
     }
 
+    /**
+     * Create Map
+     */
     public void createMap() {
         loadLevel setLevel = new loadLevel(this);
         try {
             stillObjects = setLevel.updateLevel(1);
-            entities= setLevel.getEntities();
-            player=setLevel.getPlayer();
+            entities = setLevel.getEntities();
+            player = setLevel.getPlayer();
         } catch (IOException e) {
-            System.out.print("Cannot open file");
+            System.out.println("Cannot open file");
         }
     }
 
+    public void createBomb() {
+        bombExisited++;
+        bomb = new Bomb(this, (int) player.bound.getX() / SCALED_SIZE, (int) player.getY() / SCALED_SIZE, Sprite.bomb.getFxImage());
+        entities.add(bomb);
+    }
+
     public void update() {
-        entities.forEach(Entity::update);
-        if (a_bomb.isRemoved()) entities.remove(a_bomb);
+
+        for (int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
+            entity.update();
+            if (entity instanceof Bomb) {
+                if (((Bomb) entity).isRemoved()) {
+                    entities.remove(entity);
+                }
+            }
+        }
+        for (int i = 0; i < stillObjects.size(); i++) {
+            Entity entity = stillObjects.get(i);
+            entity.update();
+            if (entity instanceof Brick) {
+                if (!((Brick) entity).isActive()) {
+                    stillObjects.set(i, new Grass(entity.getX() / SCALED_SIZE, entity.getY() / SCALED_SIZE, Sprite.grass.getFxImage()));
+                }
+            }
+        }
+
+//        for (Entity entity : entities) {
+//            entity.update();
+//        }
+//         if (player.bomb.isRemoved()) entities.remove(player.bomb);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
-    }
-
-    public void start(Bomber bomber) {
-        running = true;
     }
 
     public List<Entity> getEntities() {
@@ -126,13 +155,5 @@ public class BombermanGame extends Application {
 
     public Camera getGameCam() {
         return gameCam;
-    }
-
-    public static int getHEIGHT() {
-        return HEIGHT;
-    }
-
-    public static int getWIDTH() {
-        return WIDTH;
     }
 }

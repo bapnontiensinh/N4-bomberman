@@ -8,7 +8,7 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public abstract class  AnimatedEntity extends Entity {
     protected BombermanGame game;
-
+    //protected boolean active =true;
     protected int _animate = 0;
     protected boolean _moving;
     //protected boolean stop;
@@ -73,4 +73,6 @@ public abstract class  AnimatedEntity extends Entity {
     public abstract void move();
 
     public abstract void remove();
+
+
 }

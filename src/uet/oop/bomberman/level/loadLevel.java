@@ -52,7 +52,7 @@ public class loadLevel {
                 stillObjects.add(new Wall(x, y, Sprite.wall.getFxImage()));
                 break;
             case '*':
-                stillObjects.add(new Brick(x, y, Sprite.brick.getFxImage()));
+                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage()));
                 break;
             case 'p':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));

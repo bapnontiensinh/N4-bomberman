@@ -24,6 +24,7 @@ public class directionalExplosion extends AnimatedEntity {
         explosions = new Explosion[1];
 
         createExplosion();
+        createBound();
     }
 
     public void createExplosion() {
@@ -51,20 +52,25 @@ public class directionalExplosion extends AnimatedEntity {
     public void render(GraphicsContext gc) {
         for (int i = 0; i < explosions.length; i++) {
             explosions[i].render(gc);
-            gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+         //   gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
         }
     }
 
     @Override
     public void createBound() {
-        bound.setWidth(SCALED_SIZE - 6);
-        bound.setHeight(SCALED_SIZE - 6);
-        bound.setX(x + 6);
-        bound.setY(y + 6);
+        bound.setWidth(SCALED_SIZE);
+        bound.setHeight(SCALED_SIZE);
+        bound.setX(x);
+        bound.setY(y);
     }
 
     @Override
     public void move() {
+
+    }
+
+    @Override
+    public void remove() {
 
     }
 }
