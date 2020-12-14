@@ -17,13 +17,14 @@ public class Enemy extends AnimatedEntity {
     int direction = randomNumber(-1);
     int tmp = direction;
     int time = 1500;
-    int current_x;
-    int current_y;
+    int _x=0;
+    int _y=0;
 
     public Enemy(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
         speed = 1;
         stop = true;
+        active=true;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class Enemy extends AnimatedEntity {
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+        gc.drawImage(img, x_real, y_real);
         //    gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
@@ -43,8 +44,8 @@ public class Enemy extends AnimatedEntity {
     public void createBound() {
         bound.setWidth(SCALED_SIZE);
         bound.setHeight(SCALED_SIZE);
-        bound.setX(x);
-        bound.setY(y);
+        bound.setX(x_real);
+        bound.setY(y_real);
 
 //        bound.setWidth(DEFAULT_SIZE);
 //        bound.setHeight(SCALED_SIZE * 3 / 4);
@@ -63,27 +64,27 @@ public class Enemy extends AnimatedEntity {
 
     private void moveUp() {
         this.img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_right1, _animate, 20).getFxImage();
-        y -= speed;
+        y_real -= speed;
         //   System.out.println("up");
     }
 
     private void moveDown() {
         this.img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_right1, _animate, 20).getFxImage();
-        y += speed;
+        y_real += speed;
         //  System.out.println("down");
     }
 
     private void moveLeft() {
         this.img = Sprite.movingSprite(Sprite.balloom_left1, Sprite.balloom_left2,
                 Sprite.balloom_left3, _animate, 20).getFxImage();
-        x -= speed;
+        x_real -= speed;
         //    System.out.println("left");
     }
 
     private void moveRight() {
         this.img = Sprite.movingSprite(Sprite.balloom_right1, Sprite.balloom_right2,
                 Sprite.balloom_right3, _animate, 20).getFxImage();
-        x += speed;
+        x_real += speed;
         //  System.out.println("right");
 
     }
@@ -93,13 +94,13 @@ public class Enemy extends AnimatedEntity {
         createBound();
         switch (direction) {
             case 0: //UP
-
                 if (!collisiontoUp()) {
                     moveUp();
                 } else {
                     tmp = direction;
                     direction = randomNumber(0);
                     time_start = System.currentTimeMillis();
+                    _y--;
                 }
                 break;
             case 1: //LEFT
@@ -112,6 +113,7 @@ public class Enemy extends AnimatedEntity {
                     tmp = direction;
                     direction = randomNumber(1);
                     time_start = System.currentTimeMillis();
+                    _x--;
                 }
                 break;
             case 2: //DOWN
@@ -123,6 +125,7 @@ public class Enemy extends AnimatedEntity {
                     tmp = direction;
                     direction = randomNumber(2);
                     time_start = System.currentTimeMillis();
+                    _y++;
                 }
                 break;
             case 3:// RIGHT
@@ -134,6 +137,7 @@ public class Enemy extends AnimatedEntity {
                     tmp = direction;
                     direction = randomNumber(3);
                     time_start = System.currentTimeMillis();
+                    _x++;
                 }
                 break;
         }
@@ -156,8 +160,11 @@ public class Enemy extends AnimatedEntity {
         if (bound.intersects(game.player.bound.getX(), game.player.bound.getY(),
                 game.player.bound.getWidth(), game.player.bound.getHeight())) {
             //Die
-            System.out.println("Die");
-            game.player.alive=false;
+            System.out.println("You Die");
+            game.player.setActive(false);
         }
+    }
+    public void die(){
+        this.img = Sprite.movingSprite(Sprite.balloom_dead,Sprite.balloom_dead, _animate, 20).getFxImage();
     }
 }

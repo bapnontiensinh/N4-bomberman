@@ -1,37 +1,36 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Animated;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.AnimatedEntity;
-import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.WIDTH;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Brick extends AnimatedEntity {
     public Brick(BombermanGame game, int x, int y, Image img) {
-        super(game,x, y, img);
-        isSolid = true;
+        super(game, x, y, img);
+        solid = true;
         createBound();
-        active=true;
+        active = true;
 
     }
 
     @Override
     public void update() {
-      //  remove();
+        //  remove();
     }
 
     @Override
     public void createBound() {
         bound.setWidth(SCALED_SIZE);
         bound.setHeight(SCALED_SIZE);
-        bound.setX(x);
-        bound.setY(y);
+        bound.setX(x_real);
+        bound.setY(y_real);
     }
-    public boolean isActive() {
-        return active;
-    }
+
+//    public boolean isActive() {
+//        return active;
+//    }
+
     @Override
     public void move() {
 
@@ -39,7 +38,7 @@ public class Brick extends AnimatedEntity {
 
     @Override
     public void remove() { // die
-       // active=false;
+        // active=false;
     }
 
 }

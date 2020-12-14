@@ -3,7 +3,10 @@ package uet.oop.bomberman.level;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Animated.Bomber;
+import uet.oop.bomberman.entities.Animated.Brick;
 import uet.oop.bomberman.entities.Animated.Enemy;
+import uet.oop.bomberman.entities.solid.Grass;
+import uet.oop.bomberman.entities.solid.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.BufferedReader;

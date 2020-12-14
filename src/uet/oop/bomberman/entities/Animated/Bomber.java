@@ -3,12 +3,7 @@ package uet.oop.bomberman.entities.Animated;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
@@ -16,16 +11,10 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomber extends AnimatedEntity {
 
-
-    public boolean alive = true;
-    private boolean show = false;
-
-  //  public Bomb bomb = new Bomb();
-
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
         speed = 2;
-        //  show =false;
+        active = true; // active = alive
     }
 
     // Can mo rong cho 1 bound
@@ -37,30 +26,28 @@ public class Bomber extends AnimatedEntity {
                     Sprite.player_up_2, _animate, 20).getFxImage();
             if (!collisiontoUp()) {
 
-                y -= speed;
-
+                y_real -= speed;
             }
-
         }
         if (game.getKeyBoard().down) {
             this.img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1,
                     Sprite.player_down_2, _animate, 20).getFxImage();
             if (!collisiontoDown()) {
-                y += speed;
+                y_real += speed;
             }
         }
         if (game.getKeyBoard().left) {
             this.img = Sprite.movingSprite(Sprite.player_left, Sprite.player_left_1,
                     Sprite.player_left_2, _animate, 20).getFxImage();
             if (!collisiontoLeft()) {
-                x -= speed;
+                x_real -= speed;
             }
         }
         if (game.getKeyBoard().right) {
             this.img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1,
                     Sprite.player_right_2, _animate, 20).getFxImage();
             if (!collisiontoRight()) {
-                x += speed;
+                x_real += speed;
             }
         }
         if (game.getKeyBoard().space) {
@@ -69,12 +56,11 @@ public class Bomber extends AnimatedEntity {
         }
     }
 
+
     @Override
     public void remove() {
 
     }
-
-    private int numberOfBomb=1;
 
     private void createBomb() {
         // show =true;
@@ -84,7 +70,7 @@ public class Bomber extends AnimatedEntity {
 //
 //        game.getEntities().add(bomb);
         game.createBomb();
-      //  game.getEntities().add(bomb);
+        //  game.getEntities().add(bomb);
         //game.setA_bomb(bomb);
     }
 
@@ -97,7 +83,7 @@ public class Bomber extends AnimatedEntity {
     }
 
     private void die() {
-        if (!alive) {
+        if (!isActive()) {
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, _animate, 20).getFxImage();
             game = new BombermanGame();
@@ -107,8 +93,8 @@ public class Bomber extends AnimatedEntity {
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
-      //  this.bomb.render(gc);
+        gc.drawImage(img, x_real, y_real);
+        //  this.bomb.render(gc);
         // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
@@ -116,7 +102,7 @@ public class Bomber extends AnimatedEntity {
     public void createBound() {
         bound.setWidth(SCALED_SIZE - 6);
         bound.setHeight(SCALED_SIZE - 6);
-        bound.setX(x + 6);
-        bound.setY(y + 6);
+        bound.setX(x_real + 6);
+        bound.setY(y_real + 6);
     }
 }

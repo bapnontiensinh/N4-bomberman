@@ -4,38 +4,36 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Animated.AnimatedEntity;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.BombermanGame.WIDTH;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
-import static uet.oop.bomberman.graphics.Sprite.bomb;
 
 public class Bomb extends AnimatedEntity {
-    protected double timeToExplode = 120; // 2 seconds
     public int afterExplode = 50; // time to explosion disappear
-
-    boolean exploded = false;
     public directionalExplosion[] explosions = null;
+    protected double timeToExplode = 120; // 2 seconds
+    private boolean exploded = false;
     private boolean removed = false;
-    private boolean canBound= true;
+    private boolean canBound;
+
     public Bomb(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
         createBound();
-        canBound =true;
-        isSolid=true;
+        canBound = true;
+        solid = true;
     }
 
     public Bomb() {
-        canBound=false;
+        canBound = false;
     }
 
     @Override
     public void update() {
-
+        animate();
         if (timeToExplode > 0) {
             --timeToExplode;
-            //System.out.print(timeToExplode);
+            this.img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1,
+                    Sprite.bomb_2, _animate, 40).getFxImage();
         } else {
             if (!exploded) {
                 explosion();
@@ -49,28 +47,20 @@ public class Bomb extends AnimatedEntity {
                 kill();
             }
         }
-
     }
-    public void kill(){
-        int x= this.x/SCALED_SIZE;
-        int y=this.y/SCALED_SIZE;
-        int index0= (y-1)* WIDTH+x;
-        int index1= y*WIDTH+x-1;
-        int index2= (y+1)*WIDTH+x;
-        int index3=y*WIDTH+x+1;
-        game.getStillObjects().get(index0).active=false;
-        game.getStillObjects().get(index1).active=false;
-        game.getStillObjects().get(index2).active=false;
-        game.getStillObjects().get(index3).active=false;
 
+    public void kill() {
+        for (int i = 0; i < 4; i++) {
+            int index = caculate(i, x, y);
+            game.getStillObjects().get(index).setActive(false);
+        }
     }
+
     public void explosion() {
         exploded = true;
-
         explosions = new directionalExplosion[4];
-
         for (int i = 0; i < 4; ++i) {
-            explosions[i] = new directionalExplosion(game,x / SCALED_SIZE, y / SCALED_SIZE, i);
+            explosions[i] = new directionalExplosion(game, x, y, i);
         }
     }
 
@@ -88,26 +78,24 @@ public class Bomb extends AnimatedEntity {
             img = Sprite.bomb_exploded2.getFxImage();
             for (int i = 0; i < explosions.length; ++i) {
                 if (explosions[i] != null) {
-                    if (!collisiontoUp()){
+                    if (!collisiontoUp() || game.getStillObjects().get(getUpIndex()).isActive()) {
                         explosions[0].render(gc);
                     }
-                    if (!collisiontoDown()){
+                    if (!collisiontoDown() || game.getStillObjects().get(getDownIndex()).isActive()) {
                         explosions[2].render(gc);
                     }
-                    if (!collisiontoLeft()){
-                        explosions[3].render(gc);
-                        //WHY ??????????????????????????
-                    }
-                    if (!collisiontoRight()){
+                    if (!collisiontoLeft() || game.getStillObjects().get(getLeftIndex()).isActive()) {
                         explosions[1].render(gc);
                     }
-                    //explosions[i].render(gc);
+                    if (!collisiontoRight() || game.getStillObjects().get(getRightIndex()).isActive()) {
+                        explosions[3].render(gc);
+                    }
                 }
             }
         }
         super.render(gc);
-       // if (canBound)
-       // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+        // if (canBound)
+        // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     public boolean isCanBound() {
@@ -117,11 +105,11 @@ public class Bomb extends AnimatedEntity {
     @Override
     public void remove() {
         removed = true;
-       // game.getEntities().remove(this);
+        // game.getEntities().remove(this);
         //game.toRemove.add(this);
         //game.bombList.remove(this);
         game.bombExisited--;
-      //  System.out.println("remove");
+        //  System.out.println("remove");
     }
 
 
@@ -129,8 +117,8 @@ public class Bomb extends AnimatedEntity {
     public void createBound() {
         bound.setWidth(SCALED_SIZE);
         bound.setHeight(SCALED_SIZE);
-        bound.setX(x);
-        bound.setY(y);
+        bound.setX(x_real);
+        bound.setY(y_real);
     }
 
     @Override

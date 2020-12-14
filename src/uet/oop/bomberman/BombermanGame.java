@@ -8,10 +8,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Animated.Bomber;
-import uet.oop.bomberman.entities.Brick;
+import uet.oop.bomberman.entities.Animated.Brick;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.graphics.Camera;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.keyboard.KeyBoard;
@@ -41,11 +41,9 @@ public class BombermanGame extends Application {
      * Player
      */
     public Bomber player;
-
+    Camera gameCam;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-
-    Camera gameCam;
     private GraphicsContext gc;
     private Canvas canvas;
 
@@ -104,7 +102,7 @@ public class BombermanGame extends Application {
 
     public void createBomb() {
         bombExisited++;
-        bomb = new Bomb(this, (int) player.bound.getX() / SCALED_SIZE, (int) player.getY() / SCALED_SIZE, Sprite.bomb.getFxImage());
+        bomb = new Bomb(this, player.getX_center_unit(), player.getY_center_unit(), Sprite.bomb.getFxImage());
         entities.add(bomb);
     }
 
@@ -124,15 +122,10 @@ public class BombermanGame extends Application {
             entity.update();
             if (entity instanceof Brick) {
                 if (!((Brick) entity).isActive()) {
-                    stillObjects.set(i, new Grass(entity.getX() / SCALED_SIZE, entity.getY() / SCALED_SIZE, Sprite.grass.getFxImage()));
+                    stillObjects.set(i, new Grass(entity.getX(), entity.getY(), Sprite.grass.getFxImage()));
                 }
             }
         }
-
-//        for (Entity entity : entities) {
-//            entity.update();
-//        }
-//         if (player.bomb.isRemoved()) entities.remove(player.bomb);
     }
 
     public void render() {
@@ -141,6 +134,9 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 
+    /**
+     * getter & setter
+     */
     public List<Entity> getEntities() {
         return entities;
     }
@@ -156,4 +152,5 @@ public class BombermanGame extends Application {
     public Camera getGameCam() {
         return gameCam;
     }
+
 }

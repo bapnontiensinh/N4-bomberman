@@ -12,7 +12,7 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class directionalExplosion extends AnimatedEntity {
     protected Explosion[] explosions;
-    int xOrigin, yOrigin;
+    int xOrigin, yOrigin; //??
     int direction;
 
     public directionalExplosion(BombermanGame game, int x, int y, int direction) {
@@ -34,12 +34,12 @@ public class directionalExplosion extends AnimatedEntity {
             if (i == explosions.length - 1) last = true;
 
             switch (direction) {
-                case 0: y-= Sprite.SCALED_SIZE; break;
-                case 1: x+= Sprite.SCALED_SIZE; break;
-                case 2: y+= Sprite.SCALED_SIZE; break;
-                case 3: x-= Sprite.SCALED_SIZE; break;
+                case 0: y--; break;
+                case 1: x-- ; break;
+                case 2: y++ ; break;
+                case 3: x++ ; break;
             }
-            explosions[i] = new Explosion(x / Sprite.SCALED_SIZE, y / Sprite.SCALED_SIZE, last, direction);
+            explosions[i] = new Explosion(x , y , last, direction);
         }
     }
 
@@ -60,8 +60,8 @@ public class directionalExplosion extends AnimatedEntity {
     public void createBound() {
         bound.setWidth(SCALED_SIZE);
         bound.setHeight(SCALED_SIZE);
-        bound.setX(x);
-        bound.setY(y);
+        bound.setX(x_real);
+        bound.setY(y_real);
     }
 
     @Override

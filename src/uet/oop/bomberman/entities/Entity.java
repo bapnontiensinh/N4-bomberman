@@ -1,37 +1,80 @@
 package uet.oop.bomberman.entities;
 
-import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.graphics.Sprite;
+
+import static uet.oop.bomberman.BombermanGame.WIDTH;
+import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public abstract class Entity {
-    // add
     public Rectangle bound;
-    public boolean isSolid;
+
     protected int x;
     protected int y;
-    protected Image img;
-    public boolean active=false;
 
-    //add
+    protected int x_real;
+    protected int y_real;
+    protected Image img;
+    protected boolean solid;
+    protected boolean active = false;
+
+
     public Entity() {
 
     }
 
-    public Entity(int xUnit, int yUnit, Image img) {
-        this.x = xUnit * Sprite.SCALED_SIZE;
-        this.y = yUnit * Sprite.SCALED_SIZE;
+    /**
+     * @param x
+     * @param y
+     * @param img Change X, Y to unit
+     */
+    public Entity(int x, int y, Image img) {
+//        this.x = xUnit * Sprite.SCALED_SIZE;
+//        this.y = yUnit * Sprite.SCALED_SIZE;
+        this.x = x;
+        this.y = y;
         this.img = img;
+        getCoodinate();
         bound = new Rectangle();
     }
 
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
-
+    public void getCoodinate() {
+        x_real = x * SCALED_SIZE;
+        y_real = y * SCALED_SIZE;
     }
+
+    public void render(GraphicsContext gc) {
+        gc.drawImage(img, x_real, y_real);
+    }
+
+    public int getX_real() {
+        return x_real;
+    }
+
+    public int getY_real() {
+        return y_real;
+    }
+
+    /**
+     * @return Get SCALE SIZE of x,y
+     */
+    public int getUpIndex() {
+        return getX() + (getY() - 1) * WIDTH;
+    }
+
+    public int getDownIndex() {
+        return getX() + (getY() + 1) * WIDTH;
+    }
+
+    public int getLeftIndex() {
+        return getX() - 1 + getY() * WIDTH;
+    }
+
+    public int getRightIndex() {
+        return getX() + 1 + getY() * WIDTH;
+    }
+
 
     public int getY() {
         return y;
@@ -41,6 +84,33 @@ public abstract class Entity {
         return x;
     }
 
+    public boolean isSolid() {
+        return solid;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public abstract void update();
 
+    public int getX_center() {
+        return x_real + SCALED_SIZE / 2;
+    }
+
+    public int getX_center_unit() {
+        return getX_center() / SCALED_SIZE;
+    }
+
+    public int getY_center() {
+        return y_real + SCALED_SIZE / 2;
+    }
+
+    public int getY_center_unit() {
+        return getY_center() / SCALED_SIZE;
+    }
 }
