@@ -4,6 +4,7 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
+import uet.oop.bomberman.entities.Animated.Enemies.Balloom;
 import uet.oop.bomberman.entities.Animated.Enemy;
 import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.entities.solid.Wall;
@@ -64,7 +65,7 @@ public class loadLevel {
                 break;
             case '1':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
-                entities.add(new Enemy(game, x, y, Sprite.balloom_left1.getFxImage()));
+                entities.add(new Balloom(game, x, y, Sprite.balloom_left1.getFxImage()));
 
                 break;
             default:

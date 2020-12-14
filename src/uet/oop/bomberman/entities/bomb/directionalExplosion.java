@@ -2,11 +2,7 @@ package uet.oop.bomberman.entities.bomb;
 
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.AnimatedEntity;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.graphics.Sprite;
-
-import java.awt.*;
+import uet.oop.bomberman.entities.AnimatedEntity;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
