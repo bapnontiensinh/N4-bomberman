@@ -9,13 +9,15 @@ public class Bomb extends Entity {
     protected double timeToExplode = 120; // 2 seconds
     public int afterExplode = 20; // time to explosion disappear
 
-    boolean exploded = false;
+   public boolean exploded = false;
     public directionalExplosion[] explosions = null;
 
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
     }
+    public Bomb(){
 
+    }
     @Override
     public void update() {
         if (timeToExplode > 0) {
