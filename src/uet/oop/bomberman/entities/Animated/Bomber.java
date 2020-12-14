@@ -8,12 +8,14 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
+import static uet.oop.bomberman.graphics.Sprite.bomb;
 
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
 public class Bomber extends AnimatedEntity {
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
-        speed = 1;
+        speed = 2;
+      //  show =false;
     }
 
     // Can mo rong cho 1 bound
@@ -47,20 +49,26 @@ public class Bomber extends AnimatedEntity {
         if (game.getKeyBoard().right) {
             if (!collisiontoRight()) {
                 this.img = Sprite.movingSprite(Sprite.player_right, Sprite.player_right_1,
-                        Sprite.player_right_2, _animate, 20).getFxImage();
+                        Sprite.player_right_2, _animate, 10).getFxImage();
                 x += speed;
             }
         }
         if (game.getKeyBoard().space){
+            if (numberOfBomb<= MAX_BOMBS)
             createBomb();
         }
     }
-
-    private int numberOfBomb=1;
-
+    private boolean show = false;
+    private int numberOfBomb=0;
+    private final int MAX_BOMBS=1;
+    private Bomb bomb =new Bomb();
     private void createBomb() {
-        Bomb bomb = new Bomb((int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
+       // show =true;
+        numberOfBomb++;
+        bomb = new Bomb((int)bound.getX()/SCALED_SIZE,(int)bound.getY()/SCALED_SIZE,Sprite.bomb.getFxImage());
+     //   bomb = new Bomb(1,3,Sprite.bomb.getFxImage());
 
+      //  System.out.println("Create BOmb");
     }
 
 
@@ -69,6 +77,9 @@ public class Bomber extends AnimatedEntity {
         animate();
         move();
         kill();
+        bomb.update();
+       if (bomb.exploded)
+        numberOfBomb--;
     }
 
     private void kill() {
@@ -78,7 +89,13 @@ public class Bomber extends AnimatedEntity {
     @Override
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
-//        gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+       // if (show == true){
+            this.bomb.render(gc);
+
+        //    show=false ;
+        //}
+
+       // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     @Override
