@@ -74,7 +74,9 @@ public abstract class Entity {
     public int getRightIndex() {
         return getX() + 1 + getY() * WIDTH;
     }
-
+    public int getIndex() {
+        return getX_center_unit()  + getY_center_unit() * WIDTH;
+    }
 
     public int getY() {
         return y;

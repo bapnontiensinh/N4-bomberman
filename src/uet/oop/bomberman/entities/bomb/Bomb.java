@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Animated.AnimatedEntity;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
@@ -54,7 +55,29 @@ public class Bomb extends AnimatedEntity {
             int index = caculate(i, x, y);
             game.getStillObjects().get(index).setActive(false);
         }
+//        for (Entity entity :
+//                game.getEntities()) {
+//            if (entity.getIndex()== game.bomb.getUpIndex()
+//                    || entity.getIndex() == game.bomb.getDownIndex()
+//                    || entity.getIndex() == game.bomb.getLeftIndex()
+//                    || entity.getIndex() == game.bomb.getRightIndex()) {
+//                entity.setActive(false);
+//            }
+//        }
+        for (Entity entity :
+                game.getEntities()) {
+            if (entity.bound.intersects(game.bomb.bound.getX(), game.bomb.bound.getY() - SCALED_SIZE, SCALED_SIZE, SCALED_SIZE)
+                    || entity.bound.intersects(game.bomb.bound.getX() + SCALED_SIZE, game.bomb.bound.getY(), SCALED_SIZE, SCALED_SIZE)
+                    || entity.bound.intersects(game.bomb.bound.getX() - SCALED_SIZE, game.bomb.bound.getY(), SCALED_SIZE, SCALED_SIZE)
+                    || entity.bound.intersects(game.bomb.bound.getX(), game.bomb.bound.getY() + SCALED_SIZE, SCALED_SIZE, SCALED_SIZE))
+                entity.setActive(false);
+        }
     }
+//        if (bound.intersects(game.player.getX_real(),game.player.getY_real(),SCALED_SIZE,SCALED_SIZE)){
+//            game.player.setActive(false);
+//            game.player.die();
+//        }
+
 
     public void explosion() {
         exploded = true;

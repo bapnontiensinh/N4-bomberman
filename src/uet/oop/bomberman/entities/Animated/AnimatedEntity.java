@@ -74,7 +74,7 @@ public abstract class AnimatedEntity extends Entity {
             int index = caculate(i, getX_center_unit(), getY_center_unit());
             if (!game.getStillObjects().get(index).isSolid()) {
                 collision_direction.add(i);
-            }else{
+            } else {
                 collision_direction.add(-1);
             }
         }

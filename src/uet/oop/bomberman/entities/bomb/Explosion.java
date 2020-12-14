@@ -10,6 +10,7 @@ public class Explosion extends Entity {
     public Explosion(int x, int y,boolean last, int direction) {
         super(x,y,null);
 
+        //chưa có animated
         switch (direction) {
             case 0:
             if(last ==  false) {
@@ -22,7 +23,7 @@ public class Explosion extends Entity {
             if(last == false) {
                 img = Sprite.explosion_horizontal2.getFxImage();
             } else {
-                img = Sprite.explosion_horizontal_right_last2.getFxImage();
+                img = Sprite.explosion_horizontal_left_last2.getFxImage();
             }
             break;
             case 2:
@@ -36,7 +37,7 @@ public class Explosion extends Entity {
             if(last == false) {
                 img = Sprite.explosion_horizontal2.getFxImage();
             } else {
-                img = Sprite.explosion_horizontal_left_last2.getFxImage();
+                img = Sprite.explosion_horizontal_right_last2.getFxImage();
             }
             break;
         }

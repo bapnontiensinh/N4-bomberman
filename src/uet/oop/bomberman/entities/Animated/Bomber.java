@@ -10,7 +10,6 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
 
 public class Bomber extends AnimatedEntity {
-
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
         speed = 2;
@@ -82,12 +81,12 @@ public class Bomber extends AnimatedEntity {
         die();
     }
 
-    private void die() {
+    public void die() {
         if (!isActive()) {
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, _animate, 20).getFxImage();
-            game = new BombermanGame();
-            System.out.println("Game Over? Restart? Y/N");
+            //game = new BombermanGame();
+           // System.out.println("Game Over? Restart? Y/N");
         }
     }
 

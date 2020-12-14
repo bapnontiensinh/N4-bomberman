@@ -9,6 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
+import uet.oop.bomberman.entities.Animated.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.solid.Grass;
@@ -41,6 +42,12 @@ public class BombermanGame extends Application {
      * Player
      */
     public Bomber player;
+
+    /**
+     * Score
+     */
+    public int score = 0;
+
     Camera gameCam;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
@@ -116,12 +123,17 @@ public class BombermanGame extends Application {
                     entities.remove(entity);
                 }
             }
+            if (entity instanceof Enemy) {
+                if (!((Enemy) entity).isActive()) {
+                    entities.remove(entity);
+                }
+            }
         }
         for (int i = 0; i < stillObjects.size(); i++) {
             Entity entity = stillObjects.get(i);
             entity.update();
             if (entity instanceof Brick) {
-                if (!((Brick) entity).isActive()) {
+                if (!(entity).isActive()) {
                     stillObjects.set(i, new Grass(entity.getX(), entity.getY(), Sprite.grass.getFxImage()));
                 }
             }

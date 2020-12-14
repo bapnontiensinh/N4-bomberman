@@ -32,6 +32,7 @@ public class Enemy extends AnimatedEntity {
         animate();
         move();
         kill();
+        die();
     }
 
     @Override
@@ -165,6 +166,9 @@ public class Enemy extends AnimatedEntity {
         }
     }
     public void die(){
-        this.img = Sprite.movingSprite(Sprite.balloom_dead,Sprite.balloom_dead, _animate, 20).getFxImage();
-    }
+       // Cần delay trước khi remove
+            if (!active){
+                this.img = Sprite.movingSprite(Sprite.balloom_dead,Sprite.balloom_dead, _animate, 40).getFxImage();
+            }
+        }
 }
