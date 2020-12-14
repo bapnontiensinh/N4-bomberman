@@ -6,7 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends Entity {
-    protected double timeToExplode = 10; // 2 seconds
+    protected double timeToExplode = 80;
     public int afterExplode = 20; // time to explosion disappear
 
     boolean exploded = false;
@@ -15,7 +15,9 @@ public class Bomb extends Entity {
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
     }
+    public Bomb(){
 
+    }
     @Override
     public void update() {
         if (timeToExplode > 0) {

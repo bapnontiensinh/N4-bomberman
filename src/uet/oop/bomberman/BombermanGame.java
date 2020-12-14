@@ -74,8 +74,8 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        a_bomb = new Bomb(3, 3, Sprite.bomb.getFxImage());
-        entities.add(a_bomb);
+//        a_bomb = new Bomb(3, 3, Sprite.bomb.getFxImage());
+//        entities.add(a_bomb);
 
         //start((Bomber) bomberman);
     }

@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Animated;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.BMMimeMultipart;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
@@ -8,12 +9,14 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
+import static uet.oop.bomberman.graphics.Sprite.bomb;
 
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
 public class Bomber extends AnimatedEntity {
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
-        speed = 1;
+        speed = 2;
+      //  show =false;
     }
 
     // Can mo rong cho 1 bound
@@ -55,12 +58,15 @@ public class Bomber extends AnimatedEntity {
             createBomb();
         }
     }
-
+    private boolean show = false;
     private int numberOfBomb=1;
-
+    private Bomb bomb =new Bomb();
     private void createBomb() {
-        Bomb bomb = new Bomb((int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
+       // show =true;
+        bomb = new Bomb((int)bound.getX()/SCALED_SIZE,(int)bound.getY()/SCALED_SIZE,Sprite.bomb.getFxImage());
+     //   bomb = new Bomb(1,3,Sprite.bomb.getFxImage());
 
+        System.out.println("Create BOmb");
     }
 
 
@@ -69,6 +75,7 @@ public class Bomber extends AnimatedEntity {
         animate();
         move();
         kill();
+        bomb.update();
     }
 
     private void kill() {
@@ -78,7 +85,12 @@ public class Bomber extends AnimatedEntity {
     @Override
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
-        gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+       // if (show == true){
+            this.bomb.render(gc);
+        //    show=false ;
+        //}
+
+       // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     @Override
@@ -88,10 +100,10 @@ public class Bomber extends AnimatedEntity {
 //        bound.setX(x + SCALED_SIZE / 2 - bound.getWidth() / 2 - 6);
 //        bound.setY(y + SCALED_SIZE * 1 / 8);
 
-//        bound.setWidth(SCALED_SIZE-6);
-//        bound.setHeight(SCALED_SIZE-6);
-//        bound.setX(x+6);
-//        bound.setY(y+6);
+        bound.setWidth(SCALED_SIZE-6);
+        bound.setHeight(SCALED_SIZE-6);
+        bound.setX(x+6);
+        bound.setY(y+6);
 
 //        bound.setWidth(SCALED_SIZE);
 //        bound.setHeight(SCALED_SIZE);
