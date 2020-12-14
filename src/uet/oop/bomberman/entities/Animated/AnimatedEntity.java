@@ -18,7 +18,9 @@ public abstract class  AnimatedEntity extends Entity {
         super(xUnit, yUnit, img);
         this.game = game;
     }
+    public AnimatedEntity(){
 
+    }
     protected boolean collisiontoDown() {
         //    stop= true;
         int Y_pos = (int) (bound.getY() + bound.getHeight() + 1) / SCALED_SIZE;
