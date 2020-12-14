@@ -33,6 +33,8 @@ public class loadLevel {
 
         char c;
         String s;
+        int height;
+        int width;
 
         for (int i = 0; i < HEIGHT; ++i) {
             s = in.readLine();

@@ -56,10 +56,15 @@ public class Bomber extends AnimatedEntity {
         }
     }
 
+    @Override
+    public void remove() {
+
+    }
+
     private int numberOfBomb=1;
 
     private void createBomb() {
-        Bomb bomb = new Bomb((int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
+        Bomb bomb = new Bomb(this.game, (int)bound.getX(),(int)bound.getY(),Sprite.bomb.getFxImage());
 
     }
 

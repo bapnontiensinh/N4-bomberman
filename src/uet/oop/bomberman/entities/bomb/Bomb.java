@@ -2,18 +2,21 @@ package uet.oop.bomberman.entities.bomb;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Animated.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Bomb extends Entity {
+public class Bomb extends AnimatedEntity {
     protected double timeToExplode = 120; // 2 seconds
-    public int afterExplode = 20; // time to explosion disappear
+    public int afterExplode = 50; // time to explosion disappear
 
     boolean exploded = false;
     public directionalExplosion[] explosions = null;
+    private boolean removed = false;
 
-    public Bomb(int x, int y, Image img) {
-        super(x, y, img);
+    public Bomb(BombermanGame game, int x, int y, Image img) {
+        super(game, x, y, img);
     }
 
     @Override
@@ -62,7 +65,22 @@ public class Bomb extends Entity {
         super.render(gc);
     }
 
+    @Override
     public void remove() {
+        removed = true;
+    }
 
+    @Override
+    public void createBound() {
+
+    }
+
+    @Override
+    public void move() {
+
+    }
+
+    public boolean isRemoved() {
+        return removed;
     }
 }
