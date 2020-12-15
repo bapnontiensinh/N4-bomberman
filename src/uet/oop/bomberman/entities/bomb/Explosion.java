@@ -18,7 +18,7 @@ public class Explosion extends Entity {
                 img = Sprite.explosion_vertical_top_last2.getFxImage();
             }
             break;
-            case 1:
+            case 3:
             if(last == false) {
                 img = Sprite.explosion_horizontal2.getFxImage();
             } else {
@@ -32,7 +32,7 @@ public class Explosion extends Entity {
                 img = Sprite.explosion_vertical_down_last2.getFxImage();
             }
             break;
-            case 3:
+            case 1:
             if(last == false) {
                 img = Sprite.explosion_horizontal2.getFxImage();
             } else {
