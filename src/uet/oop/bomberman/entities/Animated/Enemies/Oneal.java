@@ -97,6 +97,8 @@ public class Oneal extends Enemy {
 
     @Override
     protected void die() {
-
+        if (!active){
+            game.setNumEnemy(game.getNumEnemy()-1);
+        }
     }
 }
