@@ -2,15 +2,14 @@ package uet.oop.bomberman.entities.Animated;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.AnimatedEntity;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import uet.oop.bomberman.entities.Powerup.Powerup;
 import java.util.List;
 
-import static uet.oop.bomberman.BombermanGame.WIDTH;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
@@ -103,8 +102,7 @@ public class Bomber extends AnimatedEntity {
         if (!isActive()) {
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, _animate, 20).getFxImage();
-            game = new BombermanGame();
-            System.out.println("Game Over? Restart? Y/N");
+            //System.out.println("Game Over? Restart? Y/N");
         }
     }
 
@@ -112,13 +110,13 @@ public class Bomber extends AnimatedEntity {
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x_real, y_real);
         //  this.bomb.render(gc);
-        // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+         gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     @Override
     public void createBound() {
-        bound.setWidth(SCALED_SIZE - 6);
-        bound.setHeight(SCALED_SIZE - 6);
+        bound.setWidth(SCALED_SIZE - 12);
+        bound.setHeight(SCALED_SIZE - 12);
         bound.setX(x_real + 6);
         bound.setY(y_real + 6);
     }

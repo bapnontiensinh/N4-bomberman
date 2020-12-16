@@ -4,6 +4,7 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
+import uet.oop.bomberman.entities.Animated.Enemies.*;
 import uet.oop.bomberman.entities.Animated.Enemy;
 import uet.oop.bomberman.entities.Powerup.upExplosion;
 import uet.oop.bomberman.entities.Powerup.upSpeed;
@@ -57,7 +58,7 @@ public class loadLevel {
                 stillObjects.add(new Wall(x, y, Sprite.wall.getFxImage()));
                 break;
             case '*':
-                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),null));
+                stillObjects.add(new Brick(game,x,y,Sprite.brick.getFxImage(),null));
                 break;
             case '&':
                 stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),new upSpeed(game, x, y, game.getCurrentLevel(), Sprite.powerup_speed.getFxImage())));
@@ -72,7 +73,27 @@ public class loadLevel {
                 break;
             case '1':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
-                entities.add(new Enemy(game, x, y, Sprite.balloom_left1.getFxImage()));
+                entities.add(new Balloom(game, x, y, Sprite.balloom_left1.getFxImage()));
+                game.setNumEnemy(game.getNumEnemy() + 1);
+                break;
+            case '2':
+                stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
+                entities.add(new Oneal(game, x, y, Sprite.oneal_left1.getFxImage()));
+                game.setNumEnemy(game.getNumEnemy() + 1);
+                break;
+            case '3':
+                stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
+                entities.add(new Minvo(game, x, y, Sprite.minvo_left1.getFxImage()));
+                game.setNumEnemy(game.getNumEnemy() + 1);
+                break;
+            case '4':
+                stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
+                entities.add(new Kondoria(game, x, y, Sprite.kondoria_left1.getFxImage()));
+                game.setNumEnemy(game.getNumEnemy() + 1);
+                break;
+            case '5':
+                stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
+                entities.add(new Doll(game, x, y, Sprite.doll_left1.getFxImage()));
                 game.setNumEnemy(game.getNumEnemy() + 1);
                 break;
             case 'x':

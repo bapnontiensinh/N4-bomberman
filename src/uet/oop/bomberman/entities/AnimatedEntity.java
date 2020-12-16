@@ -14,7 +14,7 @@ public abstract class AnimatedEntity extends Entity {
     protected BombermanGame game;
 
     protected int _animate = 0;
-    protected int speed;
+    protected double speed;
 
 
     public AnimatedEntity(BombermanGame game, int x, int y, Image img) {
@@ -106,7 +106,12 @@ public abstract class AnimatedEntity extends Entity {
             _animate = 0;
     }
 
-    public abstract void createBound();
+    public void createBound(){
+        bound.setX(x_real + 1);
+        bound.setY(y_real + 1);
+        bound.setWidth(SCALED_SIZE - 2);
+        bound.setHeight(SCALED_SIZE - 2);
+    };
 
     public abstract void move();
 

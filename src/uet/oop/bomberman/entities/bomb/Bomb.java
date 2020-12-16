@@ -3,9 +3,13 @@ package uet.oop.bomberman.entities.bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.AnimatedEntity;
+import uet.oop.bomberman.entities.Animated.Brick;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.graphics.Sprite;
+
+import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomb extends AnimatedEntity {
     protected double timeToExplode = 120; // 2 seconds
@@ -19,28 +23,34 @@ public class Bomb extends AnimatedEntity {
 
     public Bomb(BombermanGame game, int x, int y, Image img, int bomblength) {
         super(game, x, y, img);
+        this.bomblength=bomblength;
+        canBound=true;
+        createBound();
+        solid=true;
+        _animate=0;
+    }
+    public Bomb(){
+        canBound=false;
     }
 
     @Override
     public void update() {
+        animate();
         if (timeToExplode > 0) {
             --timeToExplode;
-            //System.out.print(timeToExplode);
+            this.img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1,
+                    Sprite.bomb_2, _animate, 40).getFxImage();
         } else {
             if (!exploded) {
                 explosion();
             } else {
-
                 kill();
-
             }
             if (afterExplode > 0) {
                 --afterExplode;
             } else {
-
                 remove();
-                updateExplosion();
-
+              //  updateExplosion();
             }
         }
     }
@@ -50,37 +60,40 @@ public class Bomb extends AnimatedEntity {
             int index = caculate(i, x, y);
             game.getStillObjects().get(index).setActive(false);
         }
-//        for (Entity entity :
-//                game.getEntities()) {
-//            if (entity.getIndex()== game.bomb.getUpIndex()
-//                    || entity.getIndex() == game.bomb.getDownIndex()
-//                    || entity.getIndex() == game.bomb.getLeftIndex()
-//                    || entity.getIndex() == game.bomb.getRightIndex()) {
-//                entity.setActive(false);
-//            }
-//        }
         for (Entity entity :
                 game.getEntities()) {
-            if (entity.bound.intersects(game.bomb.bound.getX(), game.bomb.bound.getY() - SCALED_SIZE, SCALED_SIZE, SCALED_SIZE)
-                    || entity.bound.intersects(game.bomb.bound.getX() + SCALED_SIZE, game.bomb.bound.getY(), SCALED_SIZE, SCALED_SIZE)
-                    || entity.bound.intersects(game.bomb.bound.getX() - SCALED_SIZE, game.bomb.bound.getY(), SCALED_SIZE, SCALED_SIZE)
-                    || entity.bound.intersects(game.bomb.bound.getX(), game.bomb.bound.getY() + SCALED_SIZE, SCALED_SIZE, SCALED_SIZE))
+            if (entity.getIndex()== game.bomb.getUpIndex()
+                    || entity.getIndex() == game.bomb.getDownIndex()
+                    || entity.getIndex() == game.bomb.getLeftIndex()
+                    || entity.getIndex() == game.bomb.getRightIndex()) {
                 entity.setActive(false);
+            }
         }
-    }
+
+//        for (Entity entity :
+//                game.getEntities()) {
+//            if (entity.bound.intersects(game.bomb.bound.getX(), game.bomb.bound.getY() - SCALED_SIZE, SCALED_SIZE, SCALED_SIZE)
+//                    || entity.bound.intersects(game.bomb.bound.getX() + SCALED_SIZE, game.bomb.bound.getY(), SCALED_SIZE, SCALED_SIZE)
+//                    || entity.bound.intersects(game.bomb.bound.getX() - SCALED_SIZE, game.bomb.bound.getY(), SCALED_SIZE, SCALED_SIZE)
+//                    || entity.bound.intersects(game.bomb.bound.getX(), game.bomb.bound.getY() + SCALED_SIZE, SCALED_SIZE, SCALED_SIZE))
+//                entity.setActive(false);
+//        }
+//    }
+
+
 //        if (bound.intersects(game.player.getX_real(),game.player.getY_real(),SCALED_SIZE,SCALED_SIZE)){
 //            game.player.setActive(false);
 //            game.player.die();
 //        }
 
-
+    }
     public void explosion() {
         exploded = true;
 
         explosions = new directionalExplosion[4];
 
         for (int i = 0; i < 4; ++i) {
-            explosions[i] = new directionalExplosion(game, x, y, i);
+            explosions[i] = new directionalExplosion(game, x, y, i,bomblength);
         }
     }
 
@@ -88,32 +101,32 @@ public class Bomb extends AnimatedEntity {
 
 
         if (game.getStillObjects().get(getUpIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getUpIndex())).removed) {
-            game.getStillObjects().set(getUpIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+           // game.getStillObjects().set(getUpIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
             game.getStillObjects().get(getUpIndex()).update();
         }
         if (game.getStillObjects().get(getLeftIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getLeftIndex())).removed) {
-            game.getStillObjects().set(getLeftIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+           // game.getStillObjects().set(getLeftIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
             game.getStillObjects().get(getLeftIndex()).update();
         }
         if (game.getStillObjects().get(getRightIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getRightIndex())).removed) {
-            game.getStillObjects().set(getRightIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+          //  game.getStillObjects().set(getRightIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
             game.getStillObjects().get(getRightIndex()).update();
         }
         if (game.getStillObjects().get(getDownIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getDownIndex())).removed) {
-            game.getStillObjects().set(getDownIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+          //  game.getStillObjects().set(getDownIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
             game.getStillObjects().get(getDownIndex()).update();
         }
     }
 
     @Override
     public void render(GraphicsContext gc) {
-
         animate();
         if (exploded) {
-            img = Sprite.bomb_exploded2.getFxImage();
+            this.img = Sprite.movingSprite(Sprite.bomb_exploded2, Sprite.bomb_exploded1,
+                    Sprite.bomb_exploded, _animate, 160).getFxImage();
             for (int i = 0; i < explosions.length; ++i) {
                 if (explosions[i] != null) {
-                    if (!collisiontoUp()/* || game.getStillObjects().get(getUpIndex()).isActive()*/) {
+                    if (!collisiontoUp() /*|| game.getStillObjects().get(getUpIndex()).isActive()*/) {
                         explosions[0].update();
                         explosions[0].render(gc);
                     }
@@ -129,12 +142,6 @@ public class Bomb extends AnimatedEntity {
                         explosions[3].update();
                         explosions[3].render(gc);
                     }
-//                    if (game.getStillObjects().get(getUpIndex()).isActive()) {
-//                        (game.getStillObjects().get(getUpIndex())).update();
-//                        (game.getStillObjects().get(getUpIndex())).render(gc);
-//
-//                    }
-
                 }
             }
         }

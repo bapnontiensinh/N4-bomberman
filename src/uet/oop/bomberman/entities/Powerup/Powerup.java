@@ -1,12 +1,9 @@
 package uet.oop.bomberman.entities.Powerup;
 
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.AnimatedEntity;
-import uet.oop.bomberman.entities.Animated.Bomber;
-import uet.oop.bomberman.entities.Entity;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.entities.AnimatedEntity;
 
-import static uet.oop.bomberman.BombermanGame.WIDTH;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public abstract class Powerup extends AnimatedEntity {
@@ -75,7 +72,7 @@ public abstract class Powerup extends AnimatedEntity {
     }
 
     protected boolean collisionWithPlayer() {
-        return game.player.getX_real()/SCALED_SIZE == this.x && game.player.getY_real()/SCALED_SIZE == this.y;
+        return game.player.getX_center_unit() == this.x && game.player.getY_center_unit() == this.y;
     }
 
     public boolean isRemoved() {

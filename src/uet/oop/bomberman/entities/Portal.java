@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.AnimatedEntity;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
@@ -37,6 +36,6 @@ public class Portal extends AnimatedEntity {
 
     @Override
     public void update() {
-        if (collisionWithPlayer()) activate();
+        if (collisionWithPlayer()&& game.getNumEnemy()==0) activate();
     }
 }

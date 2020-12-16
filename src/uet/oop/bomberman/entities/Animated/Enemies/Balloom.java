@@ -104,15 +104,6 @@ public class Balloom extends Enemy {
 
     }
 
-    public void kill() {
-        if (bound.intersects(game.player.bound.getX(), game.player.bound.getY(),
-                game.player.bound.getWidth(), game.player.bound.getHeight())) {
-            //Die
-            System.out.println("You Die");
-            game.player.setActive(false);
-        }
-    }
-
     public void die() {
         // Cần delay trước khi remove
         if (!active) {

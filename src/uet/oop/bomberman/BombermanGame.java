@@ -9,9 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
+import uet.oop.bomberman.entities.Animated.Enemy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Powerup.Powerup;
-import uet.oop.bomberman.entities.Powerup.upSpeed;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.graphics.Camera;
@@ -29,8 +29,6 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-    private int currentLevel = 1;
-
     /**
      * Bomb
      */
@@ -38,13 +36,13 @@ public class BombermanGame extends Application {
     public int bombExisited = 0;
     public Bomb bomb = new Bomb();
     public List<Bomb> bombList = new ArrayList<>();
-    private int bomblength = 1;
-
     /**
      * Player
      */
     public Bomber player;
     Camera gameCam;
+    private int currentLevel = 1;
+    private int bomblength = 1;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private GraphicsContext gc;
@@ -126,26 +124,36 @@ public class BombermanGame extends Application {
                     entities.remove(entity);
                 }
             }
+            if (entity instanceof Powerup) {
+                if (((Powerup) entity).isRemoved()) {
+                    entities.remove(entity);
+                }
+            }
         }
         for (Entity entity : stillObjects) {
             entity.update();
         }
-        for (Entity entity : stillObjects) {
-            entity.update();
-        }
-       // updateBrick();
+//        for (Entity entity : stillObjects) {
+//            entity.update();
+//        }
+        updateBrick();
     }
-    public void updateBrick(){
+
+    public void updateBrick() {
         for (int i = 0; i < stillObjects.size(); i++) {
             Entity entity = stillObjects.get(i);
             if (entity instanceof Brick) {
-                //entity.update();
-                if (((Brick) entity).removed) {
-                     stillObjects.set(i, new Grass(entity.getX(), entity.getY(), Sprite.grass.getFxImage()));
+                entity.update();
+                if (!((Brick) entity).isActive()) {
+                    stillObjects.set(i, new Grass(entity.getX(), entity.getY(), Sprite.grass.getFxImage()));
+                    if (((Brick) entity).getContainPowerup() != null) {
+                        entities.add(((Brick) entity).getContainPowerup());
+                    }
                 }
             }
         }
     }
+
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
@@ -175,23 +183,23 @@ public class BombermanGame extends Application {
         return currentLevel;
     }
 
-    public void setBomblength(int bomblength) {
-        this.bomblength = bomblength;
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 
     public int getBomblength() {
         return bomblength;
     }
 
-    public void setNumEnemy(int numEnemy) {
-        this.numEnemy = numEnemy;
+    public void setBomblength(int bomblength) {
+        this.bomblength = bomblength;
     }
 
     public int getNumEnemy() {
         return numEnemy;
     }
 
-    public void setCurrentLevel(int currentLevel) {
-        this.currentLevel = currentLevel;
+    public void setNumEnemy(int numEnemy) {
+        this.numEnemy = numEnemy;
     }
 }

@@ -15,7 +15,7 @@ public abstract class Entity {
 
     protected int x_real;
     protected int y_real;
-    protected Image img;
+    public Image img;
     protected boolean solid;
     protected boolean active = false;
 
@@ -88,6 +88,10 @@ public abstract class Entity {
 
     public boolean isSolid() {
         return solid;
+    }
+
+    public void setSolid(boolean solid) {
+        this.solid = solid;
     }
 
     public boolean isActive() {
