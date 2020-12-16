@@ -2,12 +2,16 @@ package uet.oop.bomberman.entities.Animated;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Powerup.Powerup;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Brick extends AnimatedEntity {
+    private Powerup containPowerup = null;
+
+    public Brick(BombermanGame game, int x, int y, Image img, Powerup powerup) {
     public boolean removed = false;
 
     public Brick(BombermanGame game, int x, int y, Image img) {
@@ -15,7 +19,7 @@ public class Brick extends AnimatedEntity {
         solid = true;
         createBound();
         active = true;
-
+        this.containPowerup = powerup;
     }
 
     @Override
@@ -47,3 +51,15 @@ public class Brick extends AnimatedEntity {
     }
 }
 
+    public void remove() { // die
+        // active=false;
+    }
+
+    public Powerup getContainPowerup() {
+        return containPowerup;
+    }
+
+    public void setContainPowerup(Powerup containPowerup) {
+        this.containPowerup = containPowerup;
+    }
+}

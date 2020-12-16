@@ -9,8 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
-import uet.oop.bomberman.entities.Animated.Enemy;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Powerup.Powerup;
+import uet.oop.bomberman.entities.Powerup.upSpeed;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.graphics.Camera;
@@ -28,6 +29,7 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
+    private int currentLevel = 1;
 
     /**
      * Bomb
@@ -36,18 +38,12 @@ public class BombermanGame extends Application {
     public int bombExisited = 0;
     public Bomb bomb = new Bomb();
     public List<Bomb> bombList = new ArrayList<>();
-
+    private int bomblength = 1;
 
     /**
      * Player
      */
     public Bomber player;
-
-    /**
-     * Score
-     */
-    public int score = 0;
-
     Camera gameCam;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
@@ -58,6 +54,7 @@ public class BombermanGame extends Application {
      * Keyboard
      */
     private KeyBoard keyBoard = new KeyBoard();
+    private int numEnemy;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -84,23 +81,23 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-
                 render();
                 update();
             }
         };
         timer.start();
 
-        createMap();
+        createMap(currentLevel);
+
     }
 
     /**
      * Create Map
      */
-    public void createMap() {
+    public void createMap(int level) {
         loadLevel setLevel = new loadLevel(this);
         try {
-            stillObjects = setLevel.updateLevel(1);
+            stillObjects = setLevel.updateLevel(level);
             entities = setLevel.getEntities();
             player = setLevel.getPlayer();
         } catch (IOException e) {
@@ -110,7 +107,7 @@ public class BombermanGame extends Application {
 
     public void createBomb() {
         bombExisited++;
-        bomb = new Bomb(this, player.getX_center_unit(), player.getY_center_unit(), Sprite.bomb.getFxImage());
+        bomb = new Bomb(this, player.getX_center_unit(), player.getY_center_unit(), Sprite.bomb.getFxImage(), bomblength);
         entities.add(bomb);
     }
 
@@ -174,4 +171,27 @@ public class BombermanGame extends Application {
         return gameCam;
     }
 
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setBomblength(int bomblength) {
+        this.bomblength = bomblength;
+    }
+
+    public int getBomblength() {
+        return bomblength;
+    }
+
+    public void setNumEnemy(int numEnemy) {
+        this.numEnemy = numEnemy;
+    }
+
+    public int getNumEnemy() {
+        return numEnemy;
+    }
+
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
+    }
 }

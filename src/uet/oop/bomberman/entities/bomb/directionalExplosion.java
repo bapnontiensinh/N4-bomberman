@@ -2,22 +2,28 @@ package uet.oop.bomberman.entities.bomb;
 
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.AnimatedEntity;
+import uet.oop.bomberman.entities.Animated.AnimatedEntity;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
+
+import java.awt.*;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class directionalExplosion extends AnimatedEntity {
     protected Explosion[] explosions;
-    int xOrigin, yOrigin; //??
-    int direction;
+    protected int xOrigin, yOrigin; //??
+    protected int direction;
+    protected int length = 1;
 
-    public directionalExplosion(BombermanGame game, int x, int y, int direction) {
-        super(game, x, y, null);
+    public directionalExplosion(BombermanGame game, int x, int y, int direction, int length) {
+        super(game,x, y, null);
         this.direction = direction;
         xOrigin = x;
         yOrigin = y;
+        this.length = length;
 
-        explosions = new Explosion[1];
+        explosions = new Explosion[length];
 
         createExplosion();
         createBound();
@@ -43,6 +49,7 @@ public class directionalExplosion extends AnimatedEntity {
                     x++;
                     break;
             }
+            explosions[i] = new Explosion(x , y , last, direction);
             explosions[i] = new Explosion(game, x, y, last, direction);
         }
     }
@@ -57,10 +64,9 @@ public class directionalExplosion extends AnimatedEntity {
 
     @Override
     public void render(GraphicsContext gc) {
-
         for (int i = 0; i < explosions.length; i++) {
             explosions[i].render(gc);
-//         //   gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+         //   gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
         }
     }
 
@@ -80,5 +86,9 @@ public class directionalExplosion extends AnimatedEntity {
     @Override
     public void remove() {
 
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 }

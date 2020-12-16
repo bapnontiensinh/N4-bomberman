@@ -3,46 +3,32 @@ package uet.oop.bomberman.entities.bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Animated.Brick;
-import uet.oop.bomberman.entities.AnimatedEntity;
+import uet.oop.bomberman.entities.Animated.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.graphics.Sprite;
 
-import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
-
 public class Bomb extends AnimatedEntity {
-    public int afterExplode = 50; // time to explosion disappear
-    public directionalExplosion[] explosions = null;
     protected double timeToExplode = 120; // 2 seconds
-    private boolean exploded = false;
+    public int afterExplode = 50; // time to explosion disappear
+
+    boolean exploded = false;
+    public directionalExplosion[] explosions = null;
     private boolean removed = false;
     private boolean canBound;
+    protected int bomblength = 1;
 
-    public Bomb(BombermanGame game, int x, int y, Image img) {
+    public Bomb(BombermanGame game, int x, int y, Image img, int bomblength) {
         super(game, x, y, img);
-        createBound();
-        canBound = true;
-        solid = true;
-
-        _animate = 0;
-    }
-
-    public Bomb() {
-        canBound = false;
     }
 
     @Override
     public void update() {
-        animate();
         if (timeToExplode > 0) {
             --timeToExplode;
-            this.img = Sprite.movingSprite(Sprite.bomb, Sprite.bomb_1,
-                    Sprite.bomb_2, _animate, 40).getFxImage();
+            //System.out.print(timeToExplode);
         } else {
             if (!exploded) {
                 explosion();
-
             } else {
 
                 kill();
@@ -90,7 +76,9 @@ public class Bomb extends AnimatedEntity {
 
     public void explosion() {
         exploded = true;
+
         explosions = new directionalExplosion[4];
+
         for (int i = 0; i < 4; ++i) {
             explosions[i] = new directionalExplosion(game, x, y, i);
         }
@@ -117,17 +105,12 @@ public class Bomb extends AnimatedEntity {
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void render(GraphicsContext gc) {
 
         animate();
         if (exploded) {
-            //img = Sprite.bomb_exploded2.getFxImage();
-            this.img = Sprite.movingSprite(Sprite.bomb_exploded2, Sprite.bomb_exploded1,
-                    Sprite.bomb_exploded, _animate, 160).getFxImage();
+            img = Sprite.bomb_exploded2.getFxImage();
             for (int i = 0; i < explosions.length; ++i) {
                 if (explosions[i] != null) {
                     if (!collisiontoUp()/* || game.getStillObjects().get(getUpIndex()).isActive()*/) {

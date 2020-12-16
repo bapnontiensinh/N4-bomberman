@@ -4,8 +4,9 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
-import uet.oop.bomberman.entities.Animated.Enemies.Balloom;
 import uet.oop.bomberman.entities.Animated.Enemy;
+import uet.oop.bomberman.entities.Powerup.upExplosion;
+import uet.oop.bomberman.entities.Powerup.upSpeed;
 import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.entities.solid.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -56,7 +57,13 @@ public class loadLevel {
                 stillObjects.add(new Wall(x, y, Sprite.wall.getFxImage()));
                 break;
             case '*':
-                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage()));
+                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),null));
+                break;
+            case '&':
+                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),new upSpeed(game, x, y, game.getCurrentLevel(), Sprite.powerup_speed.getFxImage())));
+                break;
+            case '^':
+                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),new upExplosion(game, x, y, game.getCurrentLevel(), Sprite.powerup_bombpass.getFxImage())));
                 break;
             case 'p':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
@@ -65,9 +72,11 @@ public class loadLevel {
                 break;
             case '1':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
-                entities.add(new Balloom(game, x, y, Sprite.balloom_left1.getFxImage()));
-
+                entities.add(new Enemy(game, x, y, Sprite.balloom_left1.getFxImage()));
+                game.setNumEnemy(game.getNumEnemy() + 1);
                 break;
+            case 'x':
+                entities.add(new Portal(game, x, y, Sprite.portal.getFxImage()));
             default:
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
         }
