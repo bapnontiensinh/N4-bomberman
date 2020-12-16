@@ -36,6 +36,6 @@ public class Portal extends AnimatedEntity {
 
     @Override
     public void update() {
-        if (collisionWithPlayer()&& game.getNumEnemy()==0) activate();
+        if (collisionWithPlayer() && game.getNumEnemy() == 0) activate();
     }
 }

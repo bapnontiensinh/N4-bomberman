@@ -2,20 +2,20 @@ package uet.oop.bomberman.entities.Animated;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import uet.oop.bomberman.entities.Powerup.Powerup;
 import java.util.List;
 
+import static uet.oop.bomberman.BombermanGame.WIDTH;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 //Cài đặt moving và khắc phục lỗi bị khựng khi thay đổi speed.
 
 public class Bomber extends AnimatedEntity {
     public static List<Powerup> powerupList = new ArrayList<>();
+    private int lives = 3;
 
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
@@ -34,7 +34,6 @@ public class Bomber extends AnimatedEntity {
 
                 y_real -= speed;
             }
-
         }
         if (game.getKeyBoard().down) {
             this.img = Sprite.movingSprite(Sprite.player_down, Sprite.player_down_1,
@@ -58,8 +57,8 @@ public class Bomber extends AnimatedEntity {
             }
         }
         if (game.getKeyBoard().space) {
-            if (game.bombExisited < game.MAX_BOMBS)
-                createBomb();
+                System.out.println(game.bombExisited + " " + game.maxBomb);
+                if (game.bombExisited < game.maxBomb) createBomb();
         }
     }
 
@@ -75,8 +74,6 @@ public class Bomber extends AnimatedEntity {
     public void remove() {
 
     }
-
-    private int numberOfBomb=1;
 
     private void createBomb() {
         // show =true;
@@ -102,7 +99,7 @@ public class Bomber extends AnimatedEntity {
         if (!isActive()) {
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, _animate, 20).getFxImage();
-            //System.out.println("Game Over? Restart? Y/N");
+            game.createMap(1);
         }
     }
 
@@ -110,13 +107,13 @@ public class Bomber extends AnimatedEntity {
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x_real, y_real);
         //  this.bomb.render(gc);
-         gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
+        // gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     @Override
     public void createBound() {
-        bound.setWidth(SCALED_SIZE - 12);
-        bound.setHeight(SCALED_SIZE - 12);
+        bound.setWidth(SCALED_SIZE - 6);
+        bound.setHeight(SCALED_SIZE - 6);
         bound.setX(x_real + 6);
         bound.setY(y_real + 6);
     }
@@ -128,5 +125,9 @@ public class Bomber extends AnimatedEntity {
 
     public void upExplosion() {
         game.setBomblength(game.getBomblength() + 2);
+    }
+
+    public void addBomb() {
+        game.maxBomb = 3;
     }
 }

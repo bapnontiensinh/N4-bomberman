@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
 import uet.oop.bomberman.entities.Animated.Enemies.*;
 import uet.oop.bomberman.entities.Animated.Enemy;
+import uet.oop.bomberman.entities.Powerup.upBomb;
 import uet.oop.bomberman.entities.Powerup.upExplosion;
 import uet.oop.bomberman.entities.Powerup.upSpeed;
 import uet.oop.bomberman.entities.solid.Grass;
@@ -41,6 +42,7 @@ public class loadLevel {
         String s;
         int height;
         int width;
+        game.setNumEnemy(0);
 
         for (int i = 0; i < HEIGHT; ++i) {
             s = in.readLine();
@@ -65,6 +67,9 @@ public class loadLevel {
                 break;
             case '^':
                 stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),new upExplosion(game, x, y, game.getCurrentLevel(), Sprite.powerup_bombpass.getFxImage())));
+                break;
+            case '%':
+                stillObjects.add(new Brick(game, x, y, Sprite.brick.getFxImage(), new upBomb(game, x, y, game.getCurrentLevel(), Sprite.powerup_bombs.getFxImage())));
                 break;
             case 'p':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
