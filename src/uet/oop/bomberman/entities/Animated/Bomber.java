@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.Animated;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import uet.oop.bomberman.entities.Powerup.Powerup;
@@ -124,7 +125,7 @@ public class Bomber extends AnimatedEntity {
     }
 
     public void upExplosion() {
-        game.setBomblength(game.getBomblength() + 2);
+        game.setBomblength(game.getBomblength() + 1);
     }
 
     public void addBomb() {

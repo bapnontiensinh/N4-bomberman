@@ -108,6 +108,7 @@ public class Balloom extends Enemy {
         // Cần delay trước khi remove
         if (!active) {
             this.img = Sprite.movingSprite(Sprite.balloom_dead, Sprite.balloom_dead, _animate, 40).getFxImage();
+            game.setNumEnemy(game.getNumEnemy() - 1);
         }
     }
 }

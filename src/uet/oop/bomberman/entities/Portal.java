@@ -16,7 +16,7 @@ public class Portal extends AnimatedEntity {
     }
 
     protected boolean collisionWithPlayer() {
-        return game.player.getX_real()/SCALED_SIZE == this.x && game.player.getY_real()/SCALED_SIZE == this.y;
+        return game.player.getX_center_unit() == this.x && game.player.getY_center_unit() == this.y;
     }
 
     @Override

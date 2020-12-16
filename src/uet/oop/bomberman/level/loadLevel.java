@@ -1,11 +1,11 @@
 package uet.oop.bomberman.level;
 
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Animated.Bomber;
 import uet.oop.bomberman.entities.Animated.Brick;
 import uet.oop.bomberman.entities.Animated.Enemies.*;
-import uet.oop.bomberman.entities.Animated.Enemy;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.Powerup.upBomb;
 import uet.oop.bomberman.entities.Powerup.upExplosion;
 import uet.oop.bomberman.entities.Powerup.upSpeed;
@@ -24,14 +24,18 @@ import static uet.oop.bomberman.BombermanGame.WIDTH;
 
 
 public class loadLevel {
-    private List<Entity> stillObjects = new ArrayList<>();
-    private List<Entity> entities = new ArrayList<>();
-    private BombermanGame game;
+    private final List<Entity> stillObjects = new ArrayList<>();
+    private final List<Entity> entities = new ArrayList<>();
+    private final BombermanGame game;
     private Bomber player;
+
     public loadLevel(BombermanGame game) {
         this.game = game;
     }
 
+    /**
+     * UpdateLevel
+     */
     public List<Entity> updateLevel(int level) throws IOException {
         FileReader file = new FileReader("res/levels/Level" + level + ".txt");
         //String filename = "Level" + level + ".txt";
@@ -40,8 +44,7 @@ public class loadLevel {
 
         char c;
         String s;
-        int height;
-        int width;
+
         game.setNumEnemy(0);
 
         for (int i = 0; i < HEIGHT; ++i) {
@@ -54,26 +57,29 @@ public class loadLevel {
         return stillObjects;
     }
 
+    /**
+     * addEntity
+     */
     public void addEntity(char c, int x, int y) {
         switch (c) {
             case '#':
                 stillObjects.add(new Wall(x, y, Sprite.wall.getFxImage()));
                 break;
             case '*':
-                stillObjects.add(new Brick(game,x,y,Sprite.brick.getFxImage(),null));
+                stillObjects.add(new Brick(game, x, y, Sprite.brick.getFxImage(), null));
                 break;
             case '&':
-                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),new upSpeed(game, x, y, game.getCurrentLevel(), Sprite.powerup_speed.getFxImage())));
+                stillObjects.add(new Brick(game, x, y, Sprite.brick.getFxImage(), new upSpeed(game, x, y, game.getCurrentLevel(), Sprite.powerup_speed.getFxImage())));
                 break;
             case '^':
-                stillObjects.add(new Brick(game,x, y, Sprite.brick.getFxImage(),new upExplosion(game, x, y, game.getCurrentLevel(), Sprite.powerup_bombpass.getFxImage())));
+                stillObjects.add(new Brick(game, x, y, Sprite.brick.getFxImage(), new upExplosion(game, x, y, game.getCurrentLevel(), Sprite.powerup_bombpass.getFxImage())));
                 break;
             case '%':
                 stillObjects.add(new Brick(game, x, y, Sprite.brick.getFxImage(), new upBomb(game, x, y, game.getCurrentLevel(), Sprite.powerup_bombs.getFxImage())));
                 break;
             case 'p':
                 stillObjects.add(new Grass(x, y, Sprite.grass.getFxImage()));
-                player =new Bomber(game, x, y, Sprite.player_down.getFxImage());
+                player = new Bomber(game, x, y, Sprite.player_down.getFxImage());
                 entities.add(player);
                 break;
             case '1':
@@ -108,6 +114,9 @@ public class loadLevel {
         }
     }
 
+    /**
+     * getter & setter
+     */
     public Bomber getPlayer() {
         return player;
     }

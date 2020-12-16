@@ -94,7 +94,4 @@ public class directionalExplosion extends AnimatedEntity {
         this.explosions = explosions;
     }
 
-    public Explosion[] getExplosions() {
-        return explosions;
-    }
 }
