@@ -34,11 +34,11 @@ public class BombermanGame extends Application {
     /**
      * Bomb
      */
-    public final int MAX_BOMBS = 1;
     public int bombExisited = 0;
     public Bomb bomb = new Bomb();
     public List<Bomb> bombList = new ArrayList<>();
     private int bomblength = 1;
+    public int maxBomb = 1;
 
     /**
      * Player
@@ -54,7 +54,8 @@ public class BombermanGame extends Application {
      * Keyboard
      */
     private KeyBoard keyBoard = new KeyBoard();
-    private int numEnemy;
+
+    private int numEnemy = 0;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -106,9 +107,11 @@ public class BombermanGame extends Application {
     }
 
     public void createBomb() {
-        bombExisited++;
-        bomb = new Bomb(this, player.getX_center_unit(), player.getY_center_unit(), Sprite.bomb.getFxImage(), bomblength);
-        entities.add(bomb);
+        if (bombExisited < maxBomb) {
+            bombExisited++;
+            bomb = new Bomb(this, player.getX_center_unit(), player.getY_center_unit(), Sprite.bomb.getFxImage(), bomblength);
+            entities.add(bomb);
+        }
     }
 
     public void update() {
@@ -119,6 +122,10 @@ public class BombermanGame extends Application {
             if (entity instanceof Bomb) {
                 if (((Bomb) entity).isRemoved()) {
                     entities.remove(entity);
+                    if (maxBomb > 1) {
+                        bombExisited--;
+                        if (bombExisited < -10) bombExisited = 0;
+                    }
                 }
             }
 

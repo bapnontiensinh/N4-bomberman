@@ -79,4 +79,12 @@ public class directionalExplosion extends AnimatedEntity {
     public void setLength(int length) {
         this.length = length;
     }
+
+    public void setExplosions(Explosion[] explosions) {
+        this.explosions = explosions;
+    }
+
+    public Explosion[] getExplosions() {
+        return explosions;
+    }
 }

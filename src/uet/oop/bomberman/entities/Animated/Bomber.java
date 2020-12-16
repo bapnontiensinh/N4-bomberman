@@ -15,6 +15,7 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomber extends AnimatedEntity {
     public static List<Powerup> powerupList = new ArrayList<>();
+    private int lives = 3;
 
     public Bomber(BombermanGame game, int x, int y, Image img) {
         super(game, x, y, img);
@@ -56,8 +57,8 @@ public class Bomber extends AnimatedEntity {
             }
         }
         if (game.getKeyBoard().space) {
-            if (game.bombExisited < game.MAX_BOMBS)
-                createBomb();
+                System.out.println(game.bombExisited + " " + game.maxBomb);
+                if (game.bombExisited < game.maxBomb) createBomb();
         }
     }
 
@@ -98,8 +99,7 @@ public class Bomber extends AnimatedEntity {
         if (!isActive()) {
             this.img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2,
                     Sprite.player_dead3, _animate, 20).getFxImage();
-            game = new BombermanGame();
-            System.out.println("Game Over? Restart? Y/N");
+            game.createMap(1);
         }
     }
 
@@ -125,5 +125,9 @@ public class Bomber extends AnimatedEntity {
 
     public void upExplosion() {
         game.setBomblength(game.getBomblength() + 2);
+    }
+
+    public void addBomb() {
+        game.maxBomb = 3;
     }
 }
