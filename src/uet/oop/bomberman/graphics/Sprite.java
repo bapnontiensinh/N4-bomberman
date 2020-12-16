@@ -4,6 +4,7 @@ import javafx.scene.image.*;
 
 import java.awt.image.BufferedImage;
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
@@ -11,7 +12,7 @@ import java.nio.IntBuffer;
 public class Sprite {
 	
 	public static final int DEFAULT_SIZE = 16;
-	public static final int SCALED_SIZE = DEFAULT_SIZE * 2;
+	public static final int SCALED_SIZE = DEFAULT_SIZE * 3;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
 	public final int SIZE;
 	private int _x, _y; // toa do trong spritesheet
@@ -19,6 +20,12 @@ public class Sprite {
 	protected int _realWidth;
 	protected int _realHeight;
 	private SpriteSheet _sheet;
+
+	//change
+
+
+
+	//change
 
 	/*
 	|--------------------------------------------------------------------------

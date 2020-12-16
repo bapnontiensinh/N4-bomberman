@@ -15,7 +15,10 @@ public class SpriteSheet {
 	public final int SIZE;
 	public int[] _pixels;
 	public BufferedImage image;
+	// add
 
+
+	//add
 	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
 	
 	public SpriteSheet(String path, int size) {
