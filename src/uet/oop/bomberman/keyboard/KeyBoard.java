@@ -1,8 +1,6 @@
 package uet.oop.bomberman.keyboard;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 
 public class KeyBoard {
     public boolean up;

@@ -34,7 +34,6 @@ public abstract class Enemy extends AnimatedEntity {
     @Override
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x_real, y_real);
-        //    gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
     }
 
     @Override
@@ -43,13 +42,11 @@ public abstract class Enemy extends AnimatedEntity {
         bound.setHeight(SCALED_SIZE);
         bound.setX(x_real);
         bound.setY(y_real);
-
-//        bound.setWidth(DEFAULT_SIZE);
-//        bound.setHeight(SCALED_SIZE * 3 / 4);
-//        bound.setX(x + SCALED_SIZE / 2 - bound.getWidth() / 2 - 6);
-//        bound.setY(y + SCALED_SIZE * 1 / 8);
     }
 
+    /**
+     * Javadoc
+     */
     protected int randomNumber(int except) {
         Random random = new Random();
         int random_number = except;

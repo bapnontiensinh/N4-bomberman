@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +11,8 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public abstract class AnimatedEntity extends Entity {
     protected BombermanGame game;
-
     protected int _animate = 0;
     protected double speed;
-
 
     public AnimatedEntity(BombermanGame game, int x, int y, Image img) {
         super(x, y, img);
@@ -81,6 +78,10 @@ public abstract class AnimatedEntity extends Entity {
         return collision_direction;
     }
 
+
+    /**
+     * Javadoc
+     */
     public int caculate(int direction, int x, int y) {
         switch (direction) {
             case 0:
@@ -99,6 +100,9 @@ public abstract class AnimatedEntity extends Entity {
         return y * WIDTH + x;
     }
 
+    /**
+     * Javadoc
+     */
     public void animate() {
         if (_animate < 500)
             _animate++;
@@ -106,12 +110,15 @@ public abstract class AnimatedEntity extends Entity {
             _animate = 0;
     }
 
-    public void createBound(){
+    /**
+     * Javadoc
+     */
+    public void createBound() {
         bound.setX(x_real + 1);
         bound.setY(y_real + 1);
         bound.setWidth(SCALED_SIZE - 2);
         bound.setHeight(SCALED_SIZE - 2);
-    };
+    }
 
     public abstract void move();
 

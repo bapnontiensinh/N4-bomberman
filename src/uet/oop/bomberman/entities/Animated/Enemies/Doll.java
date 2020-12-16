@@ -23,7 +23,6 @@ public class Doll extends Enemy {
     protected void kill() {
 
     }
-
     @Override
     protected void die() {
 

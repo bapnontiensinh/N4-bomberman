@@ -7,11 +7,10 @@ import uet.oop.bomberman.entities.AnimatedEntity;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class directionalExplosion extends AnimatedEntity {
-    public boolean stop = false;
     protected Explosion[] explosions;
-    protected int xOrigin, yOrigin; //??
+    protected int xOrigin, yOrigin;
     protected int direction;
-    protected int length = 1;
+    protected int length;
 
     public directionalExplosion(BombermanGame game, int x, int y, int direction, int length) {
         super(game, x, y, null);
@@ -23,9 +22,7 @@ public class directionalExplosion extends AnimatedEntity {
         createExplosion();
     }
 
-    public Explosion[] getExplosions() {
-        return explosions;
-    }
+
 
     public void createExplosion() {
         boolean last = false;
@@ -54,17 +51,17 @@ public class directionalExplosion extends AnimatedEntity {
 
     @Override
     public void update() {
-        for (int i = 0; i < explosions.length; i++) {
-            explosions[i].update();
-            if (!explosions[i].next_display) break;
+        for (Explosion explosion : explosions) {
+            explosion.update();
+            if (!explosion.next_display) break;
             //   gc.fillRect(bound.getX(), bound.getY(), bound.getWidth(), bound.getHeight());
         }
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        for (int i = 0; i < explosions.length; i++) {
-            explosions[i].render(gc);
+        for (Explosion explosion : explosions) {
+            explosion.render(gc);
         }
     }
 
@@ -86,12 +83,5 @@ public class directionalExplosion extends AnimatedEntity {
 
     }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public void setExplosions(Explosion[] explosions) {
-        this.explosions = explosions;
-    }
 
 }

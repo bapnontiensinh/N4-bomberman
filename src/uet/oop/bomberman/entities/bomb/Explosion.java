@@ -9,7 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Explosion extends AnimatedEntity {
-    public boolean next_display = true;
+    protected boolean next_display = true;
     protected boolean last;
     protected int direction;
 
@@ -122,6 +122,9 @@ public class Explosion extends AnimatedEntity {
 
     }
 
+    /**
+     * kill
+     */
     public void kill() {
         for (Entity entity : game.getEntities()) {
             if (this.bound.intersects(entity.bound.getX() + 1, entity.bound.getY() + 1, SCALED_SIZE - 2, SCALED_SIZE - 2))

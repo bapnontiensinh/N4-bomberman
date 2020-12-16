@@ -60,42 +60,25 @@ public class Oneal extends Enemy {
         if (game.player.getX_real()<this.getX_real()){
             if (!collisiontoLeft()){
                 moveLeft();
-                setStop(stop);
-                if (stop){
-                    moveDown();
+
                 }
             }
-
-        }
         if (game.player.getX_real()>this.getX_real()){
             if (!collisiontoRight()){
                 moveRight();
-                setStop(stop);
-                if (stop){
-                    moveUp();
-                }
             }
 
         }
         if (game.player.getY_real()<this.getY_real()){
             if (!collisiontoUp()){
                 moveUp();
-                setStop(stop);
-                if (stop){
-                    moveLeft();
-                }
             }
 
         }
         if (game.player.getY_real()>this.getY_real()){
             if (!collisiontoDown()){
                 moveDown();
-                setStop(stop);
-                if (stop){
-                    moveRight();
-                }
             }
-
         }
     }
 

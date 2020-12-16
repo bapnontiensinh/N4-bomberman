@@ -12,7 +12,6 @@ public class Grass extends Entity {
 
     @Override
     public void update() {
-        //Say sth
     }
 
 }

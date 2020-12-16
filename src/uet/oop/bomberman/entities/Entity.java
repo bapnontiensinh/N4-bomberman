@@ -9,13 +9,11 @@ import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public abstract class Entity {
     public Rectangle bound;
-
+    public Image img;
     protected int x;
     protected int y;
-
     protected int x_real;
     protected int y_real;
-    public Image img;
     protected boolean solid;
     protected boolean active = false;
 
@@ -25,9 +23,7 @@ public abstract class Entity {
     }
 
     /**
-     * @param x
-     * @param y
-     * @param img Change X, Y to unit
+     * Javadoc
      */
     public Entity(int x, int y, Image img) {
 //        this.x = xUnit * Sprite.SCALED_SIZE;
@@ -39,15 +35,23 @@ public abstract class Entity {
         bound = new Rectangle();
     }
 
+    /**
+     * Javadoc
+     */
     public void getCoodinate() {
         x_real = x * SCALED_SIZE;
         y_real = y * SCALED_SIZE;
     }
 
+    public abstract void update();
+
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x_real, y_real);
     }
 
+    /**
+     * getter&setter
+     */
     public int getX_real() {
         return x_real;
     }
@@ -56,9 +60,6 @@ public abstract class Entity {
         return y_real;
     }
 
-    /**
-     * @return Get SCALE SIZE of x,y
-     */
     public int getUpIndex() {
         return getX() + (getY() - 1) * WIDTH;
     }
@@ -74,8 +75,9 @@ public abstract class Entity {
     public int getRightIndex() {
         return getX() + 1 + getY() * WIDTH;
     }
+
     public int getIndex() {
-        return getX_center_unit()  + getY_center_unit() * WIDTH;
+        return getX_center_unit() + getY_center_unit() * WIDTH;
     }
 
     public int getY() {
@@ -101,8 +103,6 @@ public abstract class Entity {
     public void setActive(boolean active) {
         this.active = active;
     }
-
-    public abstract void update();
 
     public int getX_center() {
         return x_real + SCALED_SIZE / 2;

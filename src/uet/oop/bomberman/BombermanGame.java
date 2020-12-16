@@ -33,11 +33,13 @@ public class BombermanGame extends Application {
     public int bombExisited = 0;
     public Bomb bomb = new Bomb();
     public int maxBomb = 1;
+    private int bomblength = 1;
     /**
      * Player
      */
     public Bomber player;
-    private int bomblength = 1;
+    public int lives = 3;
+
     private int currentLevel = 1;
 
     private List<Entity> entities = new ArrayList<>();
