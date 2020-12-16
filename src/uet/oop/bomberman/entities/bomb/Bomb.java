@@ -3,8 +3,10 @@ package uet.oop.bomberman.entities.bomb;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Animated.Brick;
 import uet.oop.bomberman.entities.AnimatedEntity;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.solid.Grass;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
@@ -22,6 +24,8 @@ public class Bomb extends AnimatedEntity {
         createBound();
         canBound = true;
         solid = true;
+
+        _animate = 0;
     }
 
     public Bomb() {
@@ -38,14 +42,19 @@ public class Bomb extends AnimatedEntity {
         } else {
             if (!exploded) {
                 explosion();
+
             } else {
-                updateExplosion();
+
+                kill();
+
             }
             if (afterExplode > 0) {
                 --afterExplode;
             } else {
+
                 remove();
-                kill();
+                updateExplosion();
+
             }
         }
     }
@@ -89,30 +98,60 @@ public class Bomb extends AnimatedEntity {
 
     public void updateExplosion() {
 
-    }
 
+        if (game.getStillObjects().get(getUpIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getUpIndex())).removed) {
+            game.getStillObjects().set(getUpIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+            game.getStillObjects().get(getUpIndex()).update();
+        }
+        if (game.getStillObjects().get(getLeftIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getLeftIndex())).removed) {
+            game.getStillObjects().set(getLeftIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+            game.getStillObjects().get(getLeftIndex()).update();
+        }
+        if (game.getStillObjects().get(getRightIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getRightIndex())).removed) {
+            game.getStillObjects().set(getRightIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+            game.getStillObjects().get(getRightIndex()).update();
+        }
+        if (game.getStillObjects().get(getDownIndex()) instanceof Brick && ((Brick) game.getStillObjects().get(getDownIndex())).removed) {
+            game.getStillObjects().set(getDownIndex(), new Grass(getX(), getY(), Sprite.grass.getFxImage()));
+            game.getStillObjects().get(getDownIndex()).update();
+        }
+    }
 
     /**
      *
      */
     @Override
     public void render(GraphicsContext gc) {
+
+        animate();
         if (exploded) {
-            img = Sprite.bomb_exploded2.getFxImage();
+            //img = Sprite.bomb_exploded2.getFxImage();
+            this.img = Sprite.movingSprite(Sprite.bomb_exploded2, Sprite.bomb_exploded1,
+                    Sprite.bomb_exploded, _animate, 160).getFxImage();
             for (int i = 0; i < explosions.length; ++i) {
                 if (explosions[i] != null) {
-                    if (!collisiontoUp() || game.getStillObjects().get(getUpIndex()).isActive()) {
+                    if (!collisiontoUp()/* || game.getStillObjects().get(getUpIndex()).isActive()*/) {
+                        explosions[0].update();
                         explosions[0].render(gc);
                     }
-                    if (!collisiontoDown() || game.getStillObjects().get(getDownIndex()).isActive()) {
+                    if (!collisiontoDown()/* || game.getStillObjects().get(getDownIndex()).isActive()*/) {
+                        explosions[2].update();
                         explosions[2].render(gc);
                     }
-                    if (!collisiontoLeft() || game.getStillObjects().get(getLeftIndex()).isActive()) {
+                    if (!collisiontoLeft()/* || game.getStillObjects().get(getLeftIndex()).isActive()*/) {
+                        explosions[1].update();
                         explosions[1].render(gc);
                     }
-                    if (!collisiontoRight() || game.getStillObjects().get(getRightIndex()).isActive()) {
+                    if (!collisiontoRight() /*|| game.getStillObjects().get(getRightIndex()).isActive()*/) {
+                        explosions[3].update();
                         explosions[3].render(gc);
                     }
+//                    if (game.getStillObjects().get(getUpIndex()).isActive()) {
+//                        (game.getStillObjects().get(getUpIndex())).update();
+//                        (game.getStillObjects().get(getUpIndex())).render(gc);
+//
+//                    }
+
                 }
             }
         }

@@ -84,6 +84,7 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+
                 render();
                 update();
             }
@@ -129,17 +130,25 @@ public class BombermanGame extends Application {
                 }
             }
         }
+        for (Entity entity : stillObjects) {
+            entity.update();
+        }
+        for (Entity entity : stillObjects) {
+            entity.update();
+        }
+       // updateBrick();
+    }
+    public void updateBrick(){
         for (int i = 0; i < stillObjects.size(); i++) {
             Entity entity = stillObjects.get(i);
-            entity.update();
             if (entity instanceof Brick) {
-                if (!(entity).isActive()) {
-                    stillObjects.set(i, new Grass(entity.getX(), entity.getY(), Sprite.grass.getFxImage()));
+                //entity.update();
+                if (((Brick) entity).removed) {
+                     stillObjects.set(i, new Grass(entity.getX(), entity.getY(), Sprite.grass.getFxImage()));
                 }
             }
         }
     }
-
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
